@@ -1,0 +1,501 @@
+body{
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+    overflow-x: hidden;
+    font-style: normal;
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
+    background-color: #fff;
+}
+
+p{
+    margin: 0;
+}
+
+div.nav-container{
+    padding-top: 5px;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    background: transparent;
+    z-index: 99;
+}
+li a{
+    color: rgba(255,255,255,0.8);
+    padding-left: 14px;
+    padding-right: 14px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    vertical-align: bottom;
+}
+
+.navbar-element-right{
+    float: right;
+    font-size: 1em;
+}
+
+.navbar-element-left{
+    float: left;
+}
+
+
+a:link{
+    text-decoration: none;
+}
+
+a{
+    background: transparent;
+    cursor: pointer;
+}
+
+
+div.outer
+{
+    margin: 0 4vw 4vh;
+}
+
+div.article-title
+{
+    padding: 6vw 3vw 3vw;
+    max-width: 60%;
+    text-align: center;
+    margin: auto;
+}
+
+div.time-tag
+{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    color: #3eb0ef;
+    font-size: 14px;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.article-container
+{
+    max-width: 60%;
+    width: 100%;
+    margin: auto;
+}
+
+.time-tag a
+{
+    color: #3eb0ef;
+}
+
+.time-tag-divider
+{
+    margin: 0 6px 0;
+    color: #738a94;
+}
+
+.title h1
+{
+    margin: 0;
+    font-size: 50px;
+}
+
+.article-background
+{
+    margin: 0 -10vw;
+    background-size: cover;
+    height: 800px;
+    border-radius: 5px;
+}
+
+.article-main-container
+{
+    font-family: "Microsoft YaHei Light", "Microsoft YaHei", sans-serif;
+    position: relative;
+    padding: 70px 100px;
+    margin-top: -170px;
+    min-height: 230px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.article-main-container:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: -5px;
+    z-index: -1;
+    display: block;
+    width: 20px;
+    height: 200px;
+    background: rgba(39,44,49,0.15);
+    filter: blur(5px);
+    transform: rotate(-5deg);
+}
+
+.article-main-container:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: -5px;
+    z-index: -1;
+    display: block;
+    width: 20px;
+    height: 200px;
+    background: rgba(39,44,49,0.15);
+    filter: blur(5px);
+    transform: rotate(5deg);
+}
+
+.do-comments-container
+{
+    border-top-color: #e4e8eb;
+    border-top-style: solid;
+    border-top-width: 0.9px;
+
+    border-bottom-color: #e4e8eb;
+    border-bottom-style: solid;
+    border-bottom-width: 0.9px;
+
+    max-width: 50%;
+    width: 100%;
+    margin: auto;
+    padding-top: 20px;
+    margin-bottom: 0px;
+    padding-bottom: 50px;
+}
+
+.first-row
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.second-row
+{
+    padding-left: 140px;
+    margin-top: -15px;
+}
+
+.image-container
+{
+    background-size: cover;
+    min-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    margin-right: 40px;
+    margin-top: -20px;
+    border-radius: 100%;
+    background-position: 50% 50%;
+}
+
+.comment-textarea
+ {
+    resize: none;
+    outline: none;
+    border-radius: 8px;
+    box-shadow: 8px 14px 38px rgba(39,44,49,.06), 1px 3px 8px rgba(39,44,49,.03);
+    width: 100%;
+    height: 54px;
+    padding: 10px 20px;
+}
+
+.comment-textarea:hover
+{
+    border-color: #3eb0ef;
+}
+
+.comment-submit-button
+{
+    min-width: 71px;
+    min-height: 71px;
+    max-height: 71px;
+    margin-left: 20px;
+    border-radius: 5px;
+    box-shadow: 8px 14px 38px rgba(39,44,49,.06), 1px 3px 8px rgba(39,44,49,.03);
+    text-align: center;
+    background-color: #3eb0ef;
+    border-style: none;
+    color: white;
+    font-size: 15px;
+    font-family: "Microsoft YaHei Light";
+}
+
+.comment-submit-button:hover
+{
+    background-color: #4eb6f2;
+    cursor: pointer;
+}
+
+.comment-emotions
+{
+    position: absolute;
+    top: 78px;
+    left: 2px;
+}
+
+.page-footer
+{
+    padding-top: 20px;
+    padding-bottom: 60px;
+    background-color: #000;
+    font-size: 13px;
+}
+
+
+.page-footer-div
+{
+    align-items: center;
+    max-width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.page-footer-span
+{
+    color: rgba(255,255,255,0.7);
+}
+
+.page-footer-nav
+{
+    line-height: 13px;
+    display: flex;
+}
+
+
+footer a{
+    color: rgba(255,255,255,0.7);
+    position: relative;
+    margin-left: 20px;
+    vertical-align: baseline;
+}
+
+.page-footer-nav a:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -11px;
+    display: block;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.page-footer-nav a:first-of-type:before {
+    display: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+a{
+    background: transparent;
+}
+
+.emotion-button
+{
+    width: 60px;
+    border-width: 1px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: #e4e8eb;
+    background-color: #fff;
+    color: #738a94;
+    margin-top: 20px;
+    padding: 4px 10px;
+    font-size: 15px;
+    text-align: center;
+    box-shadow: none;
+}
+.emotion-button:hover
+{
+    cursor: pointer;
+}
+
+.comment-emotion-selector
+{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+table
+{
+    display: none;
+    border-style: solid;
+    border-color: rgb(229, 233, 239);
+    border-radius: 5px;
+    border-width: 1px;
+    padding:2px;
+
+    box-shadow: 0 11px 12px 0 rgba(106,115,133,.3);
+
+}
+
+table:before
+{
+    content: "";
+    display: block;
+    position: relative;
+    top: -10px;
+    left: 10px;
+    width: 8px;
+    height: 5px;
+    background: url(arrow.png) 0 -49px no-repeat
+}
+td
+{
+    border-radius: 3px;
+    padding:5px;
+}
+
+td:hover
+{
+    background-color: rgb(221,221,221);
+    cursor: pointer;
+}
+
+.like-container
+{
+    min-width: 58px;
+    max-width: 58px;
+    min-height: 58px;
+    margin: auto;
+    padding-left: 14px;
+    padding-top: 14px;
+    max-height: 58px;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border-style: solid;
+    border-width: 4px;
+    border-color: rgb(83,110,154);
+
+    margin-bottom: 5px;
+}
+
+.like-container:hover
+{
+    border-color: rgb(113,140,184);
+    cursor: pointer;
+}
+
+.like-sum
+{
+    max-width: 20%;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+.like-sum p
+{
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+    color: rgb(83,110,154);
+}
+
+.zero-row
+{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin-left: 140px;
+    margin-bottom: 15px;
+}
+
+.zero-row input
+{
+    border-radius: 4px;
+    border-style: solid;
+    width: 100%;
+    line-height: 15px;
+    padding: 5px 20px;
+    border-width: 1px;
+    border-color: rgb(169,169,169);
+}
+
+.comments-container
+{
+    max-width: 50%;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 100px;
+}
+
+.comment
+{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+
+    padding-bottom: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: #e4e8eb;
+    border-bottom-width: 1px;
+}
+
+.comment-avatar
+{
+    max-height: 100px;
+    max-width: 100px;
+
+    margin-right: 40px;
+
+    min-height: 100px;
+    min-width: 100px;
+
+    background-size: cover;
+
+    border-radius: 100%;
+}
+
+.comment-text
+{
+    display: block;
+}
+
+.comment-nickname
+{
+    color: #6d757a;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.comment-time
+{
+    margin-top: 3px;
+    color: #3eb0ef;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.comment-content
+{
+    margin-top: 5px;
+}
+
+#like-decoration
+{
+    visibility: hidden;
+    margin-top: -27px;
+    margin-left: 63px;
+    transition: all 0.5s;
+}
+
+.article-main-container p
+{
+    margin: 10px 0;
+}

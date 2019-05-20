@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    <link rel="stylesheet" th:href="@{/css/gallery-css.css}">
+    <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+
+</head>
+<body>
+    <div class="site" style="min-height: 100vh;">
+        <div class="nav-container">
+            <ul class="navbar" style="max-width: 60%;width: 100%;margin: auto;margin-top: 10px">
+                <li class="navbar-element-left">
+                    <a class="home-page" href="/">Laurence</a>
+                </li>
+
+                <li class="navbar-element-right">
+                    <a href="https://baike.baidu.com/item/方滨兴/9525950">About me</a>
+                </li>
+                <li class="navbar-element-right">
+                    <a href="#">Programming</a>
+                </li>
+
+                <li class="navbar-element-right">
+                    <a href="/gallery">Photographing</a>
+                </li>
+                <li class="navbar-element-right">
+                    <a href="/mindfuck">MindFuck</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="big-image-container">
+            <img src="" alt=""  id="big-image">
+        </div>
+
+        <div class="title">
+            <h1>画廊</h1>
+        </div>
+
+        <div style="display: flex;flex-direction: column" th:each="article:${articles}">
+            <div class="gallery-title" th:text="${article.title}">雪泥鸿爪</div>
+            <div class="gallery-container" >
+
+                <article class="post postcard" onclick="c(this)" th:each="photo : ${article.photosList}" th:attr="img=${photo.path}">
+                    <a href="#" class="postcard-img-link">
+                        <div class="postcard-img" th:style="'background-image: url('+${photo.path}+')'"></div>
+                    </a>
+
+                    <div class="postcard-content">
+                        <a href="#" class="postcard-content-link">
+                            <header>
+                                <span class="postcard-content-tags">
+                                    Photographing
+                                </span>
+                                <h2 class="postcard-content-header" th:text="${article.title}">怎么同意地球是圆的</h2>
+                            </header>
+                            <section>
+                                <p th:utext="${article.content}">
+                                    宇宙是一个假象，是不是。<br><br>
+
+                                    我不相信当代科学。<br><br>
+
+                                    除非有一个人骑马一直朝前走，<br><br>
+
+                                    路过所有的草原，海，山，爱情，相遇，别离，城市和岁月，<br><br>
+
+                                    最终回到你身边，<br><br>
+
+                                    这样我才同意你球可能是圆的，对不对。       <br>                 </p>
+                            </section>
+                        </a>
+                        <footer class="postcard-content-footer">
+                            <img th:src="@{/css/avatar.jpg}" alt="Laurence" class="postcard-footer-avatar">
+                            <span class="postcard-footer-author">
+                                Laurence
+                            </span>
+                        </footer>
+                    </div>
+                </article>
+
+
+                </div>
+        </div>
+        <!-- status elements -->
+        <div class="scroller-status">
+            <div class="infinite-scroll-request loader-ellips">
+                ...
+            </div>
+            <p class="infinite-scroll-last"></p>
+            <p class="infinite-scroll-error"></p>
+        </div>
+
+        <p class="pagination">
+            <a class="pagination__next" href="/gallery/?page=2"></a>
+        </p>
+</div>
+
+    <footer class="page-footer">
+        <div class="page-footer-div">
+
+            <span class="page-footer-span">人间动物园 © 1998 - 2019 All Rights Reserved</span>
+            <nav class="page-footer-nav">
+                <a href="/">Latest Posts</a>
+                <a href="https://www.drstrangeluv.xyz" target="_blank" rel="noopener">Laurence</a>
+            </nav>
+        </div>
+    </footer>
+<script>
+    function c(a) {
+        var g = $(a).attr('img');
+        console.log(g);
+        $("#big-image").attr("src",g);
+        $(".big-image-container").fadeIn("fast");
+    }
+    $(".big-image-container").click(function () {
+        $(".big-image-container").fadeOut("fast");
+    })
+
+    $(".container").infiniteScroll({
+        path:'.pagination__next',
+        append:'.post',
+        hideNav:'.pagination',
+        animate: true,
+        maxPage:2,
+        scrollThreshold:90
+    })
+</script>
+
+
+</body>
+</html>

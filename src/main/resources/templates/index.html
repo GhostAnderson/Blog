@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME - Laurence</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+
+
+    <script th:src="@{/js/main.js}"></script>
+</head>
+<body>
+
+<div class="site">
+
+    <div class="nav-container">
+        <ul class="navbar">
+            <li class="navbar-element-left">
+                <a class="home-page" href="/">Laurence</a>
+            </li>
+
+            <li class="navbar-element-right">
+                <a href="https://baike.baidu.com/item/方滨兴/9525950">About me</a>
+            </li>
+            <li class="navbar-element-right">
+                <a href="#">Programming</a>
+            </li>
+
+            <li class="navbar-element-right">
+                <a href="/gallery">Photographing</a>
+            </li>
+            <li class="navbar-element-right">
+                <a href="/mindfuck">MindFuck</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="video-container">
+        <div class="title-container">
+            <p class="main-title">
+                人间动物园
+            </p>
+            <p class="subtitle">
+                跑吧，不要回头
+            </p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="end-of-video" style="width: 100%;"></div>
+
+    </div>
+
+    <div class="container">
+        <article class="post postcard"  th:each="article : ${articles}">
+            <a th:href="'/archives/'+${article.aid}" class="postcard-img-link">
+                <div class="postcard-img" th:style="'background-image: url('+${article.coverImage}+')'"></div>
+            </a>
+
+            <div class="postcard-content">
+                <a th:href="'/archives/'+${article.aid}" class="postcard-content-link">
+                    <header>
+                        <span class="postcard-content-tags">
+                            MindFuck
+                        </span>
+                        <h2 class="postcard-content-header" th:text="${article.title}"></h2>
+                    </header>
+                    <section>
+                        <p th:utext="${article.content}">
+                            宇宙是一个假象，是不是。<br><br>
+
+                            我不相信当代科学。<br><br>
+
+                            除非有一个人骑马一直朝前走，<br><br>
+
+                            路过所有的草原，海，山，爱情，相遇，别离，城市和岁月，<br><br>
+
+                            最终回到你身边，<br><br>
+
+                            这样我才同意你球可能是圆的，对不对。       <br>                 </p>
+                    </section>
+                </a>
+                <footer class="postcard-content-footer">
+                    <img src="./css/avatar.jpg" alt="Laurence" class="postcard-footer-avatar">
+                    <span class="postcard-footer-author">
+                        Laurence
+                    </span>
+                </footer>
+            </div>
+        </article>
+    </div>
+
+    <!-- status elements -->
+    <div class="scroller-status">
+        <div class="infinite-scroll-request loader-ellips">
+            ...
+        </div>
+        <p class="infinite-scroll-last"></p>
+        <p class="infinite-scroll-error"></p>
+    </div>
+
+    <p class="pagination">
+        <a class="pagination__next" href="/?page=2"></a>
+    </p>
+
+    <footer class="page-footer">
+        <div class="page-footer-div">
+
+            <span class="page-footer-span">人间动物园 © 1998 - 2019 All Rights Reserved</span>
+            <nav class="page-footer-nav">
+                <a href="/">Latest Posts</a>
+                <a href="https://www.drstrangeluv.xyz" target="_blank" rel="noopener">Laurence</a>
+                <a href="https://www.drstrangeluv.xyz" target="_blank" rel="noopener" style="color: #000">其中audakat有10%的股份</a>
+            </nav>
+        </div>
+    </footer>
+
+</div>
+
+    <script>
+        function scroll() {
+        var top = $(".end-of-video").offset().top;
+        var scrollTop = $(window).scrollTop();
+        if(scrollTop<top){
+            $('.nav-container').css("background",'transparent');
+            var minus = top-scrollTop;
+            var divide = minus/top;
+            if(divide<0.16)
+            {
+                $(".main-title").css('display','none');
+                $(".subtitle")  .css('display','none');
+
+            }
+            else
+            {
+                $(".main-title").css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2*(1-divide)+')');
+                $(".subtitle")  .css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2.45*(1-divide)+')');
+
+                $(".main-title").css('display','block');
+                $(".subtitle")  .css('display','block');
+
+                $(".main-title").css('filter','blur('+10*(1-divide)+'px)');
+                $(".subtitle")  .css('filter','blur('+10*(1-divide)+'px)');
+
+            }
+
+
+            $(".subtitle").css('margin-top',40*divide);
+        }
+        else
+        {
+        $('.nav-container').css("background",'rgb(10,10,10)');
+        }
+        }
+
+        $(window).on('scroll',function () {
+            scroll();
+        });
+
+        $(".container").infiniteScroll({
+            path:'.pagination__next',
+            append:'.post',
+            hideNav:'.pagination',
+            animate: true,
+            maxPage:2,
+            scrollThreshold:90
+        })
+
+    </script>
+</body>
+</html>

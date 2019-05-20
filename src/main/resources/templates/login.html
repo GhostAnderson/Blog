@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+    <div class="site">
+        <div class="login-container">
+            <div class="title">
+                <p style="text-align: center">登录</p>
+            </div>
+
+            <div class="avatar" style="background-image: url('css/avatar.jpg')"></div>
+
+            <div>
+            <div class="username-container">
+                <input name="username" id="username" cols="30" rows="1" class="textarea-log" placeholder="用户名">
+            </div>
+            <div class="password-container">
+                <input type="password"  name="password" id="password" cols="30" rows="1" class="textarea-log" placeholder="密码" >
+            </div>
+
+            </div>
+
+            <div class="login-button" onclick="c()">
+                登录
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function c() {
+            form = new FormData();
+            form.append("username",$("#username").val());
+            form.append("pass",$("#password").val());
+            $.ajax(
+                {
+                    type:'post',
+
+                    contentType:false,
+                    //取消帮我们格式化数据，是什么就是什么
+                    processData:false,
+                    url:'/admin/login',
+                    data:form,
+                    success:function (res) {
+                        if (res!=null)
+                        window.location.href=res;
+                    }
+                }
+            )
+        }
+        $("body").keydown(function() {
+            if (event.keyCode == "13") {//keyCode=13是回车键；数字不同代表监听的按键不同
+                c();
+            }
+        });
+    </script>
+</body>
+</html>

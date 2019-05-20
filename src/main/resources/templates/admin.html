@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="site">
+    <div class="editor-container">
+        <textarea name="title" id="title-area" cols="30" rows="1" class="title-textarea"></textarea>
+        <div id="editor"></div>
+
+        <div class="tag-selector">
+            <div>选择类别：</div>
+            <select name="tag" id="tag" class="tag-select">
+                <option value="1">MindFuck</option>
+                <option value="2">Photographing</option>
+                <option value="3">Programming</option>
+            </select>
+        </div>
+
+        <input type="file" id="file" style="display: none">
+        <div class="select-pic" id="select-pic" onclick="g()">选择图片</div>
+
+        <div class="submit-button" onclick="c()">发布文章</div>
+    </div>
+</div>
+
+<script>
+    var E = window.wangEditor;
+    var editor = new E("#editor");
+    editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+
+    editor.create();
+
+    function c() {
+
+        form = new FormData();
+        form.append('title',$("#title-area").val());
+        form.append('cover',document.getElementById('file').files[0]);
+        form.append('tag',$("#tag").val());
+        form.append('content',editor.txt.html());
+        $.ajax(
+            {
+                type:'post',
+                url:'/admin/submit',
+
+                contentType:false,
+                //取消帮我们格式化数据，是什么就是什么
+                processData:false,
+                data:form,
+                success:function () {
+                    alert("上传成功！");
+                }
+            }
+        )
+    }
+
+    function g() {
+        $("#file").click();
+    }
+</script>
+</body>
+</html>

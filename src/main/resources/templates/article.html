@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>怎么同意地球是圆的 - 人间动物园</title>
+    <link rel="stylesheet" th:href="@{/css/article-css.css}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div class="site">
+
+    <div id="aid" th:text="${article.aid}" style="display: none"></div>
+
+    <div class="nav-container" style="background: rgb(10,10,10)">
+        <ul class="navbar" style="max-width: 60%;width: 100%;margin-left: auto;margin-right: auto">
+            <li class="navbar-element-left">
+                <a class="home-page" href="/">Laurence</a>
+            </li>
+
+            <li class="navbar-element-right">
+                <a href="https://baike.baidu.com/item/%E6%96%B9%E6%BB%A8%E5%85%B4/9525950">About me</a>
+            </li>
+            <li class="navbar-element-right">
+                <a href="#">Programming</a>
+            </li>
+
+            <li class="navbar-element-right">
+                <a href="/gallery">Photographing</a>
+            </li>
+            <li class="navbar-element-right">
+                <a href="#">MindFuck</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="outer">
+
+        <article class = "article-container">
+            <div class="article-title">
+
+
+                <div class="time-tag">
+                    <span class="post-time" th:text="${article.time}">15 May 2019</span>
+                    <span class="time-tag-divider">
+                        /
+                    </span>
+
+                    <a href="#" th:text="${article.tag.tagName}">MindFuck</a>
+
+                </div>
+
+                <div class="title">
+                    <h1 th:text="${article.title}">怎么同意地球是圆的</h1>
+                </div>
+
+
+            </div>
+
+            <div class="article-background" th:style="'background-image: url('+${article.coverImage}+')'"></div>
+
+            <div class="article-main-container" th:utext="${article.content}">
+                宇宙是一个假象，是不是。<br><br>
+
+                我不相信当代科学。<br><br>
+
+                除非有一个人骑马一直朝前走，<br><br>
+
+                路过所有的草原，海，山，爱情，相遇，别离，城市和岁月，<br><br>
+
+                最终回到你身边，<br><br>
+
+                这样我才同意你球可能是圆的，对不对。       <br>
+            </div>
+            <div th:each="photo : ${article.photosList}">
+                <img alt="" th:src="${photo.path}" style="object-fit: cover;width: 80%;margin-left: 10%">
+            </div>
+
+        </article>
+    </div>
+
+    <div class="like-container" onclick="b()">
+        <i class="fa fa-thumbs-o-up" style="font-size:48px;color:rgb(83,110,154)"></i>
+    </div>
+
+    <div class="like-sum">
+        <p id="like-sum-text" th:text="${article.likes}"></p>
+        <p id="like-decoration">+1</p>
+    </div>
+
+    <div class="do-comments-container">
+        <div class="zero-row">
+            <input type="text" id="nickname" placeholder="昵称">
+        </div>
+        <div class="first-row">
+            <div class="image-container" style="background-image: url(/img/avatar/1.jpg)">
+            </div>
+            <textarea name="comment" id="comment" class="comment-textarea" cols="60" rows="10" placeholder="在这里输入那些没人想听的废话。"></textarea>
+            <button class="comment-submit-button" onclick="d()">提 交</button>
+
+
+        </div>
+        <div class="second-row">
+            <div class="emotion-button" onclick="c()">颜文字</div>
+
+            <div style="position: absolute;z-index: 9999;background-color: #fff">
+                <table class="comment-emotion-selector" id="selector">
+                    <tr>
+                        <td onclick="e(this)">
+                            |∀ﾟ
+                        </td>
+                        <td onclick="e(this)">
+                            (´ﾟДﾟ`)
+                        </td>
+                        <td onclick="e(this)">
+                            (;´Д`)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="e(this)">
+                            (｀･ω･)
+                        </td >
+                        <td onclick="e(this)">
+                            (=ﾟωﾟ)=
+                        </td>
+                        <td onclick="e(this)">
+                            | ω・´)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="e(this)">
+                            |-` )
+                        </td>
+                        <td onclick="e(this)">
+                            (*ﾟ∀ﾟ*)
+                        </td>
+                        <td onclick="e(this)">
+                            ( ´_ゝ`)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="e(this)">
+                            (╬ﾟдﾟ)
+                        </td>
+                        <td onclick="e(this)">
+                            ┃電柱┃
+                        </td>
+                        <td onclick="e(this)">
+                            (ノﾟ∀ﾟ)ノ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td onclick="e(this)">
+                            ( ` ・´)
+                        </td>
+                        <td onclick="e(this)">
+                            (ゝ∀･)
+                        </td>
+                        <td onclick="e(this)">
+                            (ﾟДﾟ≡ﾟДﾟ)
+                        </td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="comments-container">
+        <div class="comment" th:each="comment : ${article.commentsList}">
+            <div class="comment-avatar" th:style="'background-image: url('+${comment.avatar}+')'"></div>
+            <div class="comment-text">
+                <div class="comment-nickname" th:text="${comment.author}"><p>Audakat</p></div>
+                <div class="comment-time" th:text="${comment.time}">21 May 2019</div>
+                <div class="comment-content" th:text="${comment.content}">父亲</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <div class="page-footer-div">
+
+            <span class="page-footer-span">人间动物园 © 1998 - 2019 All Rights Reserved</span>
+            <nav class="page-footer-nav">
+                <a href="/">Latest Posts</a>
+                <a href="https://www.drstrangeluv.xyz" target="_blank" rel="noopener">Laurence</a>
+            </nav>
+        </div>
+    </footer>
+
+
+</div>
+
+<script>
+
+    has_liked = false;
+    function b() {
+        if(has_liked)
+            return;
+        $("#like-decoration").css("visibility","visible");
+        $("#like-decoration").css("transform","translateY(-20px)");
+        $("#like-decoration").css("opacity","0");
+
+        $("#like-sum-text").text(parseInt($("#like-sum-text").text())+1);
+        has_liked=true;
+
+
+        var aid = $("#aid").text();
+        form  = new FormData();
+        form.append("aid",aid);
+        $.ajax(
+            {
+                type:"post",
+                url:"/archives/like",
+                data:form,
+                contentType:false,
+                //取消帮我们格式化数据，是什么就是什么
+                processData:false,
+                success:function (r) {
+                    if(r == null)
+                    {
+                        alert("点赞失败");
+                    }
+                }
+            }
+        )
+    }
+
+
+    function c() {
+        $("#selector").css('display','table');
+        $("#selector").css('margin-top','10px');
+        $("#selector").css('margin-left','10px');
+
+    }
+
+    function d()
+    {
+        var aid = $("#aid").text();
+        var nickname = $("#nickname").val();
+        var content = $("#comment").val();
+        var form = new FormData();
+        form.append("aid",aid);
+        form.append("nickname",nickname);
+        form.append("content",content);
+
+        $.ajax(
+            {
+                type:"post",
+                url:"/archives/reply",
+                data:form,
+                contentType:false,
+                //取消帮我们格式化数据，是什么就是什么
+                processData:false,
+                success:function (r) {
+                    if(r == null)
+                    {
+                        alert("回复失败");
+                    }
+                }
+            }
+        );
+        location.reload(true);
+
+    }
+
+    function e(r)
+    {
+        $("#comment").val($("#comment").val()+r.textContent.trim());
+    }
+
+
+    $(document).on("click",function (e) {
+        if(e.target.className == "emotion-button")
+            return;
+        $("#selector").css('display','none');
+    })
+    
+
+</script>
+
+</body>
+</html>

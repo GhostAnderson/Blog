@@ -1,0 +1,31 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://106.12.215.37:3306/blog?useSSl=false&characterEncoding=utf-8
+    username: root
+    password: Ghost12345
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:{web.upload-path}
+
+
+  mvc:
+    static-path-pattern: /**
+
+
+web:
+  upload-path:
+    C:/users/caoyu/desktop/new
+
+server:
+  port: 80

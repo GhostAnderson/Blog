@@ -1,0 +1,271 @@
+body{
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #f4f8fb;
+
+    overflow-x: hidden;
+    font-style: normal;
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-feature-settings: "liga" on;
+
+}
+
+a
+{
+    text-decoration: none;
+}
+
+.gallery-container
+{
+    max-width: 60%;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+.postcard
+{
+    overflow: hidden;
+    margin: 0 20px 40px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 8px 14px 38px rgba(39,44,49,.06), 1px 3px 8px rgba(39,44,49,.03);
+    transition: all 0.5s ease;
+
+    min-height: 300px;
+
+    flex: 1 1 300px;
+    flex-direction: column;
+}
+
+.postcard:hover
+{
+    box-shadow: 0 0 1px rgba(39,44,49,0.10), 0 3px 16px rgba(39, 44, 49,0.07);
+    transition: all 0.3s ease;
+    transform: translate3D(0, -1px, 0);
+}
+
+
+.postcard-content-header
+{
+    font-size: 20px;
+}
+
+.postcard-img
+{
+    height: 300px;
+    width: auto;
+    background-color: coral;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.postcard-content-tags
+{
+    color: #738a94;
+    font-size: 12px;
+}
+
+.postcard-content-footer
+{
+    margin-left: 25px;
+    margin-bottom: 25px;
+    display: block;
+    vertical-align: baseline;
+}
+
+.postcard-footer-avatar
+{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border-radius: 100%;
+    display: inline;
+}
+
+.postcard-footer-author
+{
+    display: inline;
+    color:#738a94;
+    font-size: 12px;
+    vertical-align: super;
+}
+
+.postcard-img-link
+{
+    display: block;
+}
+
+.postcard-content
+{
+    display: flex;
+    flex-direction: column;
+}
+
+a.postcard-content-link
+{
+    color: #15171a;
+    padding: 25px 25px 0;
+    cursor: pointer;
+}
+
+.big-image-container
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 9999;
+    display: none;
+}
+
+.big-image-container img
+{
+    position: relative;
+    margin: auto;
+    max-width: 60%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+
+div.nav-container{
+    padding-top: 5px;
+    width: 100%;
+    height: 50px;
+    background: rgb(10,10,10);
+    z-index: 99;
+}
+
+.navbar-element-left, .navbar-element-right{
+    list-style-type: none;
+}
+
+
+li a{
+    color: rgba(255,255,255,0.8);
+    padding-left: 14px;
+    padding-right: 14px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    vertical-align: bottom;
+}
+
+.navbar-element-right{
+    float: right;
+    font-size: 1em;
+}
+
+.navbar-element-left{
+    float: left;
+}
+
+.title
+{
+    margin: auto;
+    width: 100%;
+    max-width: 60%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: #c4c8cb;
+    border-bottom-style: solid;
+}
+
+.title h1
+{
+    text-align: center;
+    font-size: 50px;
+}
+
+.page-footer
+{
+    padding-top: 20px;
+    padding-bottom: 60px;
+    background-color: #000;
+    font-size: 13px;
+}
+
+
+.page-footer-div
+{
+    align-items: center;
+    max-width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.page-footer-span
+{
+    color: rgba(255,255,255,0.7);
+}
+
+.page-footer-nav
+{
+    line-height: 13px;
+    display: flex;
+}
+
+
+footer a{
+    color: rgba(255,255,255,0.7);
+    position: relative;
+    margin-left: 20px;
+    vertical-align: baseline;
+}
+
+.page-footer-nav a:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -11px;
+    display: block;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.page-footer-nav a:first-of-type:before {
+    display: none;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+a{
+    background: transparent;
+}
+
+.gallery-title
+{
+    padding-top: 10px;
+    max-width: 60%;
+    width: 100%;
+    margin:auto;
+    padding-bottom: 10px;
+    font-size: 25px;
+    color: #738a94;
+    text-align: center;
+    border-bottom-color: #c4c8cb;
+    border-bottom-width: 1px;
+    border-bottom-style: dot-dash;
+    margin-bottom: 10px;
+}
