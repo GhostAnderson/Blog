@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -37,15 +38,11 @@ public class AdminController
 
 	@PostMapping("/admin/login")
 	public String AdminLogin(@RequestParam("username") String username,
-	                         @RequestParam("pass") String pass,
-	                         HttpServletResponse response)
+							 @RequestParam("pass") String pass,
+							 HttpServletRequest request)
 	{
-		if(indexService.hasLoggedIn(username,pass))
-		{
-			response.addCookie(new Cookie(cookieName,cookieContent));
-			return "/admin";
-		}
-		return null;
+
+		return adminService.AdminLogin(username,pass,request);
 	}
 
 

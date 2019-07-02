@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://106.12.215.37:3306/blog?useSSl=false&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/blog?useSSl=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: Ghost12345
 

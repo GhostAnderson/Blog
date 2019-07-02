@@ -56,7 +56,7 @@
     <div class="container">
         <article class="post postcard"  th:each="article : ${articles}">
             <a th:href="'/archives/'+${article.aid}" class="postcard-img-link">
-                <div class="postcard-img" th:style="'background-image: url('+${article.coverImage}+')'"></div>
+                <div class="postcard-img" th:style="'background-image: url('+${article.thumbImage}+')'"></div>
             </a>
 
             <div class="postcard-content">

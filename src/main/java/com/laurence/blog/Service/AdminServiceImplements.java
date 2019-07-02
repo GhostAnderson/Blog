@@ -1,20 +1,23 @@
 package com.laurence.blog.Service;
 
 import com.laurence.blog.DAO.ArticleDAO;
+import com.laurence.blog.DAO.AuthorDAO;
 import com.laurence.blog.DAO.PhotoDAO;
 import com.laurence.blog.DAO.TagDAO;
 import com.laurence.blog.Model.Article;
+import com.laurence.blog.Model.Author;
 import com.laurence.blog.Model.Photos;
 import com.laurence.blog.Model.Tag;
+import com.laurence.blog.Utils.ThumbsUtil;
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.nio.file.Path;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 
 @Service
 public class AdminServiceImplements implements AdminService
@@ -27,6 +30,11 @@ public class AdminServiceImplements implements AdminService
 
 	@Autowired
 	PhotoDAO photoDAO;
+
+	@Autowired
+	AuthorDAO authorDAO;
+
+
 
 	@Override
 	public String SubmitArticle(String title, MultipartFile cover, Integer tid, String content)
@@ -50,7 +58,9 @@ public class AdminServiceImplements implements AdminService
 			String uploadpath = path.getAbsolutePath()+"/static/img/upload";
 			uploadFile(cover.getBytes(),uploadpath,name);
 			String filePath = "/img/upload/"+name;
+			String thumbPath = "/img/upload/thumb-"+name;
 			article.setCoverImage(filePath);
+			article.setThumbImage(thumbPath);
 			articleDAO.save(article);
 			return "success";
 		}
@@ -109,18 +119,42 @@ public class AdminServiceImplements implements AdminService
 		}
 	}
 
-
-	public static void uploadFile(byte[] file,String filePath,String fileName) throws Exception
-	{
-		File targetFile = new File(filePath);
-		filePath = targetFile.getAbsolutePath();
-		if(!targetFile.exists())
+	@Override
+	public String AdminLogin(String username, String pass, HttpServletRequest request) {
+		if(hasLoggedIn(username,pass))
 		{
-			targetFile.mkdir();
+			request.getSession().setAttribute("Author",authorDAO.findByAuthorName(username));
+			return "/admin";
+		}
+		return "/login";
+	}
+
+	private static void uploadFile(byte[] file,String filePath,String fileName) throws Exception
+	{
+		File targetPath = new File(filePath);
+		filePath = targetPath.getAbsolutePath();
+		if(!targetPath.exists())
+		{
+			targetPath.mkdir();
 		}
 		FileOutputStream out= new FileOutputStream(filePath+"/"+fileName);
+
+
 		out.write(file);
 		out.flush();
 		out.close();
+
+		Thumbnails.of(filePath+"/"+fileName).size(1024,768).toFile(filePath+"/thumb-"+fileName);
+	}
+
+	private Boolean hasLoggedIn(String username, String pass)
+	{
+		Author author = authorDAO.findByAuthorName(username);
+		if(author == null)
+		{
+			return false;
+		}
+		else
+			return author.getPassword().equals(pass);
 	}
 }

@@ -98,17 +98,7 @@ public class IndexController
 	@GetMapping("/admin")
 	public String Admin(HttpServletRequest request)
 	{
-		for (Cookie cookie:
-		     request.getCookies())
-		{
-			if(cookie.getName().equals(cookieName))
-			{
-				if(cookieContent.equals(cookie.getValue()))
-					return "admin";
-			}
-			else return "404";
-		}
-		return "404";
+		return "admin";
 	}
 
 	@GetMapping("/gallery")

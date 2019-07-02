@@ -40,17 +40,7 @@ public class IndexServiceImplements implements IndexService
 		return articleDAO.findByPage(page,numperpage);
 	}
 
-	@Override
-	public Boolean hasLoggedIn(String username, String pass)
-	{
-		Author author = authorDAO.findByAuthorName(username);
-		if(author == null)
-		{
-			return false;
-		}
-		else
-			return author.getPassword().equals(pass);
-	}
+
 
 	@Override
 	public String Like(Integer aid)
