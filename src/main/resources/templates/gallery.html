@@ -44,7 +44,7 @@
             <div class="gallery-title" th:text="${article.title}">雪泥鸿爪</div>
             <div class="gallery-container" >
 
-                <article class="post postcard" onclick="c(this)" th:each="photo : ${article.photosList}" th:attr="img=${photo.path}">
+                <article class="post postcard" onclick="c(this)" th:each="photo : ${article.photosList}" th:attr="img=${photo.thumb_path},big=${photo.path}">
                     <a href="#" class="postcard-img-link">
                         <div class="postcard-img" th:style="'background-image: url('+${photo.path}+')'"></div>
                     </a>
@@ -110,7 +110,7 @@
     </footer>
 <script>
     function c(a) {
-        var g = $(a).attr('img');
+        var g = $(a).attr('big');
         console.log(g);
         $("#big-image").attr("src",g);
         $(".big-image-container").fadeIn("fast");

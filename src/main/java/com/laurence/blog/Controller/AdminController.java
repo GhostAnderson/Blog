@@ -24,9 +24,6 @@ public class AdminController
 	@Autowired
 	IndexService indexService;
 
-	private final static String cookieName = "fldsakjfl";
-	private final static String cookieContent = "kjuhdsfi65786198phlklmfjgsadyf987420395u";
-
 	@PostMapping("/admin/submit")
 	public String SubmitArticle(@RequestParam("title")String title,
 	                            @RequestParam("cover")MultipartFile coverpic,

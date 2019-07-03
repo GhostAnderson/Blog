@@ -9,6 +9,7 @@ import com.laurence.blog.Model.Author;
 import com.laurence.blog.Model.Photos;
 import com.laurence.blog.Model.Tag;
 import com.laurence.blog.Utils.ThumbsUtil;
+import com.laurence.blog.Utils.timeUtil;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,10 @@ public class AdminServiceImplements implements AdminService
 			uploadFile(cover.getBytes(),uploadpath,name);
 			String filePath = "/img/upload/"+name;
 			String thumbPath = "/img/upload/thumb-"+name;
+
+			String time = timeUtil.getDateString();
+			article.setTime(time);
+
 			article.setCoverImage(filePath);
 			article.setThumbImage(thumbPath);
 			articleDAO.save(article);
@@ -113,7 +118,9 @@ public class AdminServiceImplements implements AdminService
 				return null;
 			}
 			String filePath = "/img/upload/"+name;
+			String thumbPath = "/img/upload/thumb-"+name;
 			photo.setPath(filePath);
+			photo.setThumb_path(thumbPath);
 			photoDAO.save(photo);
 			return "success";
 		}

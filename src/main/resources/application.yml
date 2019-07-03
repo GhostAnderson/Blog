@@ -29,3 +29,5 @@ web:
 
 server:
   port: 80
+  tomcat:
+    max-http-post-size: -1

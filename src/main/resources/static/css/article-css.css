@@ -108,6 +108,9 @@ div.time-tag
     background-size: cover;
     height: 800px;
     border-radius: 5px;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
 }
 
 .article-main-container

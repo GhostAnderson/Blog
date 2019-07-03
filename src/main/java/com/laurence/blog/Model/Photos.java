@@ -11,6 +11,25 @@ public class Photos
 
 	private String path;
 
+	public Photos(String path, String thumb_path, Article article) {
+		this.path = path;
+		this.thumb_path = thumb_path;
+		this.article = article;
+	}
+
+	public Photos() {
+	}
+
+	public String getThumb_path() {
+		return thumb_path;
+	}
+
+	public void setThumb_path(String thumb_path) {
+		this.thumb_path = thumb_path;
+	}
+
+	private String thumb_path;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "aid")
 	private Article article;

@@ -10,12 +10,12 @@ public interface ArticleDAO extends JpaRepository<Article,Integer>
 {
 	Article findArticleByAid(Integer aid);
 
-	@Query(nativeQuery = true,value = "SELECT * from article LIMIT ?1,?2")
+	@Query(nativeQuery = true,value = "SELECT * from article ORDER BY AID DESC LIMIT ?1,?2 ;")
 	List<Article> findByPage(Integer start, Integer numPerPage);
 
-	@Query(nativeQuery = true,value = "SELECT * from article where tid='2' LIMIT ?1,?2 ;")
+	@Query(nativeQuery = true,value = "SELECT * from article where tid='2' ORDER BY AID DESC LIMIT ?1,?2 ;")
 	List<Article> findByPhotograph(Integer start, Integer numPerPage);
 
-	@Query(nativeQuery = true,value = "SELECT * from article where tid='1' LIMIT ?1,?2 ;")
+	@Query(nativeQuery = true,value = "SELECT * from article where tid='1' ORDER BY AID DESC LIMIT ?1,?2 ;")
 	List<Article> findByMindFuck(Integer start, Integer numPerPage);
 }
