@@ -4,6 +4,8 @@ import com.laurence.blog.DAO.AuthorDAO;
 import com.laurence.blog.Model.Author;
 import com.laurence.blog.Service.AdminService;
 import com.laurence.blog.Service.IndexService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,8 @@ import java.io.IOException;
 @RestController
 public class AdminController
 {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+
 	@Autowired
 	AdminService adminService;
 

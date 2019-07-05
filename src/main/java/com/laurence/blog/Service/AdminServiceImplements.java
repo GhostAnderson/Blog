@@ -12,6 +12,8 @@ import com.laurence.blog.Utils.ThumbsUtil;
 import com.laurence.blog.Utils.timeUtil;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -23,6 +25,8 @@ import java.io.*;
 @Service
 public class AdminServiceImplements implements AdminService
 {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImplements.class);
+
 	@Autowired
 	ArticleDAO articleDAO;
 

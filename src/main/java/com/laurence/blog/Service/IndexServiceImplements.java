@@ -7,6 +7,8 @@ import com.laurence.blog.Model.Article;
 import com.laurence.blog.Utils.timeUtil;
 import com.laurence.blog.Model.Author;
 import com.laurence.blog.Model.Comments;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import java.util.List;
 @Transactional
 public class IndexServiceImplements implements IndexService
 {
+	private static final Logger LOGGER = LoggerFactory.getLogger(IndexServiceImplements.class);
 
 	@Autowired
 	ArticleDAO articleDAO;

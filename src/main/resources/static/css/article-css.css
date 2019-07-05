@@ -384,7 +384,11 @@ td:hover
     border-style: solid;
     border-width: 4px;
     border-color: rgb(83,110,154);
-
+    -webkit-transition: 0.3s time;
+    -moz-transition: 0.3s time;
+    -ms-transition: 0.3s time;
+    -o-transition: 0.3s time;
+    transition: 0.3s time;
     margin-bottom: 5px;
 }
 

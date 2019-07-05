@@ -16,8 +16,6 @@ public class Author
 	private String authorName;
 
 	private String password;
-	
-	
 
 	@OneToMany(mappedBy = "author")
 	private List<Article> articleList;

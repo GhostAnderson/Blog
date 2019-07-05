@@ -25,19 +25,6 @@ public class Article
 
 	private String coverImage;
 
-	public Article(Author author, Tag tag, String title, String content, String coverImage, String thumbImage, String time, Integer likes, List<Comments> commentsList, List<Photos> photosList) {
-		this.author = author;
-		this.tag = tag;
-		this.title = title;
-		this.content = content;
-		this.coverImage = coverImage;
-		this.thumbImage = thumbImage;
-		this.time = time;
-		this.likes = likes;
-		this.commentsList = commentsList;
-		this.photosList = photosList;
-	}
-
 	public String getThumbImage() {
 		return thumbImage;
 	}
