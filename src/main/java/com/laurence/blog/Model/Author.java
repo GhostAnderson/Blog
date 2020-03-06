@@ -1,13 +1,16 @@
 package com.laurence.blog.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Author
+@Data
+public class Author implements UserDetails
 {
 	@Id
 	@GeneratedValue
@@ -17,6 +20,7 @@ public class Author
 
 	private String password;
 
+
 	@OneToMany(mappedBy = "author")
 	private List<Article> articleList;
 
@@ -24,50 +28,45 @@ public class Author
 	{
 	}
 
-	public Author(String authorName, String password, List<Article> articleList)
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities()
 	{
-		this.authorName = authorName;
-		this.password = password;
-		this.articleList = articleList;
+		return null;
 	}
 
-	public Integer getPid()
-	{
-		return pid;
-	}
-
-	public void setPid(Integer pid)
-	{
-		this.pid = pid;
-	}
-
-	public String getAuthorName()
-	{
-		return authorName;
-	}
-
-	public void setAuthorName(String authorName)
-	{
-		this.authorName = authorName;
-	}
-
-	public List<Article> getArticleList()
-	{
-		return articleList;
-	}
-
-	public void setArticleList(List<Article> articleList)
-	{
-		this.articleList = articleList;
-	}
-
+	@Override
 	public String getPassword()
 	{
 		return password;
 	}
 
-	public void setPassword(String password)
+	@Override
+	public String getUsername()
 	{
-		this.password = password;
+		return authorName;
+	}
+
+	@Override
+	public boolean isAccountNonExpired()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled()
+	{
+		return true;
 	}
 }

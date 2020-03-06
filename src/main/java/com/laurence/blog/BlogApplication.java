@@ -6,13 +6,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class BlogApplication extends SpringBootServletInitializer
+public class BlogApplication
 {
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-	{
-		return application.sources(BlogApplication.class);
-	}
 	public static void main(String[] args)
 	{
 		SpringApplication.run(BlogApplication.class, args);

@@ -1,10 +1,10 @@
 
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/blog?useSSl=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/blog?serverTimezone=Asia/Shanghai
     username: root
-    password: Ghost12345
+    password: 123456
 
 
   jpa:
@@ -15,13 +15,9 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:{web.upload-path}
 
-
-  mvc:
-    static-path-pattern: /**
-
+  thymeleaf:
+    cache: false
 
 web:
   upload-path:

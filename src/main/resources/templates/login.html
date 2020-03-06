@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Login</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/login.css}">
@@ -9,6 +11,7 @@
 <body>
     <div class="site">
         <div class="login-container">
+            <form th:action="@{/login}" method="post">
             <div class="title">
                 <p style="text-align: center">登录</p>
             </div>
@@ -22,28 +25,34 @@
             <div class="password-container">
                 <input type="password"  name="password" id="password" cols="30" rows="1" class="textarea-log" placeholder="密码" >
             </div>
+                <div class="error-warning-container">
+                    <div class="error-warning" id="error">
+                        用户名或密码错误
+                    </div>
+                </div>
 
             </div>
 
-            <div class="login-button" onclick="c()">
-                登录
+            <div class="login-button-container">
+                <input type="submit" class="login-button" value="登录">
             </div>
+            </form>
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
         function c() {
             form = new FormData();
             form.append("username",$("#username").val());
-            form.append("pass",$("#password").val());
+            form.append("password",$("#password").val());
+            form.append("_csrf",[[${_csrf.token}]])
             $.ajax(
                 {
                     type:'post',
 
                     contentType:false,
-                    //取消帮我们格式化数据，是什么就是什么
                     processData:false,
-                    url:'/admin/login',
+                    url:'/login',
                     data:form,
                     success:function (res) {
                         if (res!=null)
@@ -57,6 +66,10 @@
                 c();
             }
         });
+        $(window).load(function () {
+            if (window.location.search.substr(1).indexOf("error")==-1)
+            {   $("#error").hide();}
+        })
     </script>
 </body>
 </html>

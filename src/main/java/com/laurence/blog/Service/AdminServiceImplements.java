@@ -10,8 +10,6 @@ import com.laurence.blog.Model.Photos;
 import com.laurence.blog.Model.Tag;
 import com.laurence.blog.Utils.ThumbsUtil;
 import com.laurence.blog.Utils.timeUtil;
-import net.coobird.thumbnailator.Thumbnailator;
-import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,7 +153,7 @@ public class AdminServiceImplements implements AdminService
 		out.flush();
 		out.close();
 
-		Thumbnails.of(filePath+"/"+fileName).size(1024,768).toFile(filePath+"/thumb-"+fileName);
+//		Thumbnails.of(filePath+"/"+fileName).size(1024,768).toFile(filePath+"/thumb-"+fileName);
 	}
 
 	private Boolean hasLoggedIn(String username, String pass)
