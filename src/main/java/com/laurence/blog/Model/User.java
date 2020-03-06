@@ -2,36 +2,45 @@ package com.laurence.blog.Model;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Data
-public class Author implements UserDetails
+public class User implements UserDetails
 {
 	@Id
 	@GeneratedValue
 	private Integer pid;
 
-	private String authorName;
+	private String username;
 
 	private String password;
 
 
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "user")
 	private List<Article> articleList;
 
-	public Author()
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Role> roleList;
+
+	public User()
 	{
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{
-		return null;
+		List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+		for(Role role: roleList){
+			grantedAuthorityList.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName()));
+		}
+		return grantedAuthorityList;
 	}
 
 	@Override
@@ -43,7 +52,7 @@ public class Author implements UserDetails
 	@Override
 	public String getUsername()
 	{
-		return authorName;
+		return username;
 	}
 
 	@Override

@@ -21,10 +21,10 @@
             </li>
 
             <li class="navbar-element-right">
-                <a href="https://baike.baidu.com/item/%E6%96%B9%E6%BB%A8%E5%85%B4/9525950">About me</a>
+                <a href="/login">Log in</a>
             </li>
             <li class="navbar-element-right">
-                <a href="#">Programming</a>
+                <a href="https://baike.baidu.com/item/%E6%96%B9%E6%BB%A8%E5%85%B4/9525950">About me</a>
             </li>
 
             <li class="navbar-element-right">
@@ -192,9 +192,11 @@
 
 </div>
 
-<script>
+<script th:inline="javascript">
 
     has_liked = false;
+    headers = {};
+    headers['X-CSRF-TOKEN'] = [[${_csrf.token}]];
     function b() {
         if(has_liked)
             return;
@@ -214,6 +216,7 @@
                 type:"post",
                 url:"/archives/like",
                 data:form,
+                headers:headers,
                 contentType:false,
                 processData:false,
                 success:function (r) {
@@ -245,21 +248,21 @@
         form.append("content",content);
 
         $.ajax(
-            {
-                type:"post",
-                url:"/archives/reply",
-                data:form,
-                contentType:false,
-                //取消帮我们格式化数据，是什么就是什么
-                processData:false,
-                success:function (r) {
-                    if(r == null)
-                    {
-                        alert("回复失败");
-                    }
+        {
+            type:"post",
+            url:"/archives/reply",
+            data:form,
+            contentType:false,
+            //取消帮我们格式化数据，是什么就是什么
+            processData:false,
+            success:function (r) {
+                if(r == null)
+                {
+                    alert("回复失败");
                 }
             }
-        );
+        }
+    );
         location.reload(true);
 
     }

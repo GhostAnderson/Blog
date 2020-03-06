@@ -61,17 +61,11 @@ public class IndexController
 	{
 		if (page == null)
 			page = 0;
-		else if (page <=0)
-		{
-			return "404";
-		}
 		else {
 			page-=1;
 		}
 
 		List<Article> articles = indexService.getMindFuck(page*numperpage,numperpage);
-		if(articles.size() == 0)
-			return "404";
 		for (int i = 0;i<articles.size();i++)
 		{
 			String temp = articles.get(i).getContent();

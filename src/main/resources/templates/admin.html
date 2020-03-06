@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Admin</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
@@ -29,7 +32,7 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     var E = window.wangEditor;
     var editor = new E("#editor");
     editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
@@ -42,12 +45,14 @@
         form.append('title',$("#title-area").val());
         form.append('cover',document.getElementById('file').files[0]);
         form.append('tag',$("#tag").val());
+        headers = {};
+        headers['X-CSRF-TOKEN'] = [[${_csrf.token}]];
         form.append('content',editor.txt.html());
         $.ajax(
             {
                 type:'post',
                 url:'/admin/submit',
-
+                headers:headers,
                 contentType:false,
                 //取消帮我们格式化数据，是什么就是什么
                 processData:false,

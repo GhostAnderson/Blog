@@ -1,4 +1,4 @@
-package com.laurence.blog.DAO;
+package com.laurence.blog.Repository;
 
 import com.laurence.blog.Model.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ArticleDAO extends JpaRepository<Article,Integer>
+public interface ArticleRepository extends JpaRepository<Article,Integer>
 {
 	Article findArticleByAid(Integer aid);
 

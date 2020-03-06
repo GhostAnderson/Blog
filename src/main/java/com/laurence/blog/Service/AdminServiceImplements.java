@@ -1,42 +1,42 @@
 package com.laurence.blog.Service;
 
-import com.laurence.blog.DAO.ArticleDAO;
-import com.laurence.blog.DAO.AuthorDAO;
-import com.laurence.blog.DAO.PhotoDAO;
-import com.laurence.blog.DAO.TagDAO;
+import com.laurence.blog.Model.User;
+import com.laurence.blog.Repository.ArticleRepository;
+import com.laurence.blog.Repository.UserRepository;
+import com.laurence.blog.Repository.PhotoRepository;
+import com.laurence.blog.Repository.TagRepository;
 import com.laurence.blog.Model.Article;
-import com.laurence.blog.Model.Author;
 import com.laurence.blog.Model.Photos;
 import com.laurence.blog.Model.Tag;
-import com.laurence.blog.Utils.ThumbsUtil;
 import com.laurence.blog.Utils.timeUtil;
+import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 @Service
+@Slf4j
 public class AdminServiceImplements implements AdminService
 {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImplements.class);
 
 	@Autowired
-	ArticleDAO articleDAO;
+	ArticleRepository articleRepository;
 
 	@Autowired
-	TagDAO tagDAO;
+	TagRepository tagRepository;
 
 	@Autowired
-	PhotoDAO photoDAO;
+	PhotoRepository photoDAO;
 
 	@Autowired
-	AuthorDAO authorDAO;
-
+	UserRepository userRepository;
 
 
 	@Override
@@ -44,12 +44,16 @@ public class AdminServiceImplements implements AdminService
 	{
 		try
 		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-			Tag tag = tagDAO.findByTid(tid);
+			assert !principal.equals("anonymous");
+			User user = (User)principal;
+
+			Tag tag = tagRepository.findByTid(tid);
 			if (tag == null)
 				return null;
-			Article article = new Article(null, tag, title, content, null, null, 0, null);
-			articleDAO.save(article);
+			Article article = new Article(user, tag, title, content, null, null, 0, null);
+			articleRepository.save(article);
 
 			Integer aid = article.getAid();
 			String name = aid + "-cover.jpg";
@@ -59,7 +63,9 @@ public class AdminServiceImplements implements AdminService
 				path=new File("");
 			}
 			String uploadpath = path.getAbsolutePath()+"/static/img/upload";
-			uploadFile(cover.getBytes(),uploadpath,name);
+			String truePath = uploadFile(cover.getBytes(),uploadpath,name);
+			Thumbnails.of(truePath).size(1280, 720).toFile(path.getAbsolutePath()+"/static/img/upload/thumb-" + name);
+
 			String filePath = "/img/upload/"+name;
 			String thumbPath = "/img/upload/thumb-"+name;
 
@@ -68,13 +74,20 @@ public class AdminServiceImplements implements AdminService
 
 			article.setCoverImage(filePath);
 			article.setThumbImage(thumbPath);
-			articleDAO.save(article);
+			articleRepository.save(article);
 			return "success";
+		}
+		catch (AssertionError e)
+		{
+			log.error(e.toString());
+			e.printStackTrace();
+			return null;
 		}
 		catch (Exception e)
 		{
+			log.error(e.toString());
 			e.printStackTrace();
-			return e.toString();
+			return null;
 		}
 
 	}
@@ -82,88 +95,71 @@ public class AdminServiceImplements implements AdminService
 	@Override
 	public String uploadPics(Integer aid, MultipartFile file)
 	{
-		Article article = articleDAO.findArticleByAid(aid);
-		if(article == null)
+		try
 		{
-			return null;
-		}
-		else if (article.getTag().getTid() != 2)
-		{
-			return null;
-		}
-		else
-		{
-			Photos photo = new Photos();
-			photo.setArticle(article);
-			photoDAO.save(photo);
 
-
-			String name = article.getPhotosList().size()+"-"+article.getAid()+".jpg";
-			File path = null;
-			try
-			{
-				path = new File(ResourceUtils.getURL("classpath:").getPath());
-			} catch (FileNotFoundException e)
+			Article article = articleRepository.findArticleByAid(aid);
+			if (article == null)
 			{
 				return null;
-			}
-			if(!path.exists())
-			{
-				path=new File("");
-			}
-			String uploadpath = path.getAbsolutePath()+"/static/img/upload";
-			try
-			{
-				uploadFile(file.getBytes(),uploadpath,name);
-			} catch (Exception e)
+			} else if (article.getTag().getTid() != 2)
 			{
 				return null;
+			} else
+			{
+				Photos photo = new Photos();
+				photo.setArticle(article);
+				photoDAO.save(photo);
+
+
+				String name = article.getPhotosList().size() + "-" + article.getAid() + ".jpg";
+				File path = null;
+				try
+				{
+					path = new File(ResourceUtils.getURL("classpath:").getPath());
+				} catch (FileNotFoundException e)
+				{
+					return null;
+				}
+				if (!path.exists())
+				{
+					path = new File("");
+				}
+				String uploadpath = path.getAbsolutePath() + "/static/img/upload";
+				String truePath =  uploadFile(file.getBytes(), uploadpath, name);
+				String filePath = "/img/upload/" + name;
+				String thumbPath = "/img/upload/thumb-" + name;
+
+				Thumbnails.of(truePath).size(1280, 720).toFile(path.getAbsolutePath()+"/static/img/upload/thumb-" + name);
+				photo.setPath(filePath);
+				photo.setThumb_path(thumbPath);
+				photoDAO.save(photo);
+				return "success";
 			}
-			String filePath = "/img/upload/"+name;
-			String thumbPath = "/img/upload/thumb-"+name;
-			photo.setPath(filePath);
-			photo.setThumb_path(thumbPath);
-			photoDAO.save(photo);
-			return "success";
-		}
-	}
 
-	@Override
-	public String AdminLogin(String username, String pass, HttpServletRequest request) {
-		if(hasLoggedIn(username,pass))
+		}catch (IOException e)
 		{
-			request.getSession().setAttribute("Author",authorDAO.findByAuthorName(username));
-			return "/admin";
+			log.error(e.toString());
+			e.printStackTrace();
+			return null;
 		}
-		return "/login";
+
 	}
 
-	private static void uploadFile(byte[] file,String filePath,String fileName) throws Exception
+
+	private static String uploadFile(byte[] file,String filePath,String fileName) throws IOException
 	{
 		File targetPath = new File(filePath);
 		filePath = targetPath.getAbsolutePath();
 		if(!targetPath.exists())
 		{
-			targetPath.mkdir();
+			targetPath.mkdirs();
 		}
 		FileOutputStream out= new FileOutputStream(filePath+"/"+fileName);
-
-
 		out.write(file);
 		out.flush();
 		out.close();
-
-//		Thumbnails.of(filePath+"/"+fileName).size(1024,768).toFile(filePath+"/thumb-"+fileName);
+		return filePath+"/"+fileName;
 	}
 
-	private Boolean hasLoggedIn(String username, String pass)
-	{
-		Author author = authorDAO.findByAuthorName(username);
-		if(author == null)
-		{
-			return false;
-		}
-		else
-			return author.getPassword().equals(pass);
-	}
 }

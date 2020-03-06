@@ -9,6 +9,4 @@ public interface AdminService
 	String SubmitArticle(String title, MultipartFile cover,Integer tid, String content);
 
 	String uploadPics(Integer aid, MultipartFile file);
-
-	String AdminLogin(String username, String pass, HttpServletRequest request);
 }

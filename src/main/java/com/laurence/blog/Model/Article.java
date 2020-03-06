@@ -13,7 +13,7 @@ public class Article
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pid")
-	private Author author;
+	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tid")
@@ -49,9 +49,9 @@ public class Article
 	{
 	}
 
-	public Article(Author author, Tag tag, String title, String content, String coverImage, String time, Integer likes, List<Comments> commentsList)
+	public Article(User user, Tag tag, String title, String content, String coverImage, String time, Integer likes, List<Comments> commentsList)
 	{
-		this.author = author;
+		this.user = user;
 		this.tag = tag;
 		this.title = title;
 		this.content = content;
@@ -61,9 +61,9 @@ public class Article
 		this.commentsList = commentsList;
 	}
 
-	public Article(Author author, Tag tag, String title, String content, String coverImage, String time, Integer likes, List<Comments> commentsList, List<Photos> photosList)
+	public Article(User user, Tag tag, String title, String content, String coverImage, String time, Integer likes, List<Comments> commentsList, List<Photos> photosList)
 	{
-		this.author = author;
+		this.user = user;
 		this.tag = tag;
 		this.title = title;
 		this.content = content;
@@ -84,14 +84,14 @@ public class Article
 		this.aid = aid;
 	}
 
-	public Author getAuthor()
+	public User getUser()
 	{
-		return author;
+		return user;
 	}
 
-	public void setAuthor(Author author)
+	public void setUser(User user)
 	{
-		this.author = author;
+		this.user = user;
 	}
 
 	public Tag getTag()

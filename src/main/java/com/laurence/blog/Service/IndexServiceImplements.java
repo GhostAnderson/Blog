@@ -1,11 +1,12 @@
 package com.laurence.blog.Service;
 
-import com.laurence.blog.DAO.ArticleDAO;
-import com.laurence.blog.DAO.AuthorDAO;
-import com.laurence.blog.DAO.CommentsDAO;
+import com.laurence.blog.Model.Tag;
+import com.laurence.blog.Repository.ArticleRepository;
+import com.laurence.blog.Repository.TagRepository;
+import com.laurence.blog.Repository.UserRepository;
+import com.laurence.blog.Repository.CommentsRepository;
 import com.laurence.blog.Model.Article;
 import com.laurence.blog.Utils.timeUtil;
-import com.laurence.blog.Model.Author;
 import com.laurence.blog.Model.Comments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -22,25 +24,25 @@ public class IndexServiceImplements implements IndexService
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexServiceImplements.class);
 
 	@Autowired
-	ArticleDAO articleDAO;
+	ArticleRepository articleRepository;
 
 	@Autowired
-	AuthorDAO authorDAO;
+	UserRepository userRepository;
 
 	@Autowired
-	CommentsDAO commentsDAO;
+	CommentsRepository commentsRepository;
 
 	@Override
 	public Article articles(Integer id)
 	{
-		Article article = articleDAO.findArticleByAid(id);
+		Article article = articleRepository.findArticleByAid(id);
 		return article;
 	}
 
 	@Override
 	public List<Article> getPage(Integer page, Integer numperpage)
 	{
-		return articleDAO.findByPage(page,numperpage);
+		return articleRepository.findByPage(page,numperpage);
 	}
 
 
@@ -48,7 +50,7 @@ public class IndexServiceImplements implements IndexService
 	@Override
 	public String Like(Integer aid)
 	{
-		Article article = articleDAO.findArticleByAid(aid);
+		Article article = articleRepository.findArticleByAid(aid);
 		if(article == null)
 		{
 			return null;
@@ -62,7 +64,7 @@ public class IndexServiceImplements implements IndexService
 	@Override
 	public String Reply(Integer aid, String nickname, String content)
 	{
-		Article article = articleDAO.findArticleByAid(aid);
+		Article article = articleRepository.findArticleByAid(aid);
 		if(article == null)
 			return null;
 		else
@@ -88,7 +90,7 @@ public class IndexServiceImplements implements IndexService
 
 			comments.setTime(timeUtil.getTimeString());
 
-			commentsDAO.save(comments);
+			commentsRepository.save(comments);
 			return "success";
 		}
 	}
@@ -96,12 +98,12 @@ public class IndexServiceImplements implements IndexService
 	@Override
 	public List<Article> Gallery(Integer page, Integer numperpage)
 	{
-		return articleDAO.findByPhotograph(page,numperpage);
+		return articleRepository.findByPhotograph(page,numperpage);
 	}
 
 	@Override
 	public List<Article> getMindFuck(Integer page, Integer numperpage)
 	{
-		return articleDAO.findByMindFuck(page,numperpage);
+		return articleRepository.findByMindFuck(page,numperpage);
 	}
 }

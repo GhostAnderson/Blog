@@ -18,6 +18,12 @@ spring:
 
   thymeleaf:
     cache: false
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/static,classpath:/resources/,file:{web.upload-path}
+
+
+  mvc:
+    static-path-pattern: /**
 
 web:
   upload-path:

@@ -41,31 +41,6 @@
     </div>
 
     <script th:inline="javascript">
-        function c() {
-            form = new FormData();
-            form.append("username",$("#username").val());
-            form.append("password",$("#password").val());
-            form.append("_csrf",[[${_csrf.token}]])
-            $.ajax(
-                {
-                    type:'post',
-
-                    contentType:false,
-                    processData:false,
-                    url:'/login',
-                    data:form,
-                    success:function (res) {
-                        if (res!=null)
-                        window.location.href=res;
-                    }
-                }
-            )
-        }
-        $("body").keydown(function() {
-            if (event.keyCode == "13") {//keyCode=13是回车键；数字不同代表监听的按键不同
-                c();
-            }
-        });
         $(window).load(function () {
             if (window.location.search.substr(1).indexOf("error")==-1)
             {   $("#error").hide();}

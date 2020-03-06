@@ -1,7 +1,5 @@
 package com.laurence.blog.Controller;
 
-import com.laurence.blog.DAO.AuthorDAO;
-import com.laurence.blog.Model.Author;
 import com.laurence.blog.Service.AdminService;
 import com.laurence.blog.Service.IndexService;
 import org.slf4j.Logger;
@@ -12,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @RestController
 public class AdminController
@@ -36,16 +31,6 @@ public class AdminController
 	{
 		return adminService.SubmitArticle(title, coverpic, tid, content);
 	}
-
-	@PostMapping("/admin/login")
-	public String AdminLogin(@RequestParam("username") String username,
-							 @RequestParam("pass") String pass,
-							 HttpServletRequest request)
-	{
-
-		return adminService.AdminLogin(username,pass,request);
-	}
-
 
 
 	@PostMapping("/archives/reply")
