@@ -28,6 +28,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 				.antMatchers("/gallery").permitAll()
 				.antMatchers("/css/**").permitAll()
 				.antMatchers("/img/**").permitAll()
+				.antMatchers("/js/**").permitAll()
+				.antMatchers("/signup").permitAll()
 				.anyRequest().hasRole("admin")
 				.and()
 				.formLogin()

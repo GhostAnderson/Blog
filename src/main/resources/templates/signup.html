@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script th:src="@{/js/sha1.js}"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Login</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
+</head>
+<body>
+<div class="site">
+    <div class="login-container">
+        <form th:action="@{/signup}" method="post" onsubmit="return c()">
+            <div class="title">
+                <p style="text-align: center">注册</p>
+            </div>
+
+            <div class="input-container">
+                <div class="un-ps-container">
+                    <input name="username" id="username" cols="30" rows="1" class="textarea-log" placeholder="用户名">
+                </div>
+                <div class="un-ps-container">
+                    <input type="password"  name="password" id="password" cols="30" rows="1" class="textarea-log" placeholder="密码" >
+                </div>
+                <div class="un-ps-container">
+                    <input type="password"  id="rua" cols="30" rows="1" class="textarea-log" placeholder="重复密码">
+                </div>
+                <div class="error-warning-container">
+                    <div class="error-warning" id="error">
+                        两次输入的密码不一致！
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="login-button-container">
+                <input type="submit" class="login-button" value="注册">
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+
+<script th:inline="javascript">
+    $(window).load(function () {
+        $("#error").hide();
+    })
+
+    function c() {
+        var ps = $("#password").val();
+        var psre = $("#rua").val();
+        if($("#username").val().length == 0)
+        {
+            $("#error").html("用户名不能为空");
+            $("#error").show();
+            return false;
+        }
+        if(ps != psre)
+        {
+            $("#error").html("两次输入的密码不一致！");
+            $("#error").show();
+            return false;
+        }
+        else
+        {
+            $("#error").hide();
+            $("#password").val(hex_sha1(ps));
+            return true;
+        }
+    }
+</script>
+</html>

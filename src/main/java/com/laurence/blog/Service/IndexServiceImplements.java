@@ -1,8 +1,9 @@
 package com.laurence.blog.Service;
 
-import com.laurence.blog.Model.Tag;
+import com.laurence.blog.Model.Role;
+import com.laurence.blog.Model.User;
 import com.laurence.blog.Repository.ArticleRepository;
-import com.laurence.blog.Repository.TagRepository;
+import com.laurence.blog.Repository.RoleRepository;
 import com.laurence.blog.Repository.UserRepository;
 import com.laurence.blog.Repository.CommentsRepository;
 import com.laurence.blog.Model.Article;
@@ -11,10 +12,11 @@ import com.laurence.blog.Model.Comments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,10 +29,16 @@ public class IndexServiceImplements implements IndexService
 	ArticleRepository articleRepository;
 
 	@Autowired
+	RoleRepository roleRepository;
+
+	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	CommentsRepository commentsRepository;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Override
 	public Article articles(Integer id)
@@ -105,5 +113,25 @@ public class IndexServiceImplements implements IndexService
 	public List<Article> getMindFuck(Integer page, Integer numperpage)
 	{
 		return articleRepository.findByMindFuck(page,numperpage);
+	}
+
+	@Override
+	public boolean Signup(String username, String password)
+	{
+		User user = userRepository.findByUsername(username);
+		if (user!= null)
+			return false;
+		assert user == null;
+		user = new User();
+		user.setUsername(username);
+		List<Role> roles = new ArrayList<>();
+		Role normal = roleRepository.findByRoleName("user");
+		roles.add(normal);
+		user.setRoleList(roles);
+
+		user.setPassword(passwordEncoder.encode(password));
+
+		userRepository.save(user);
+		return true;
 	}
 }

@@ -65,7 +65,6 @@ input[type="submit" i]
     max-width: 50%;
     width: 100%;
     margin: auto;
-    margin-bottom: 0;
 }
 
 .title p
@@ -88,19 +87,12 @@ input[type="submit" i]
     border-radius: 100%;
 }
 
-.username-container
+.un-ps-container
 {
     margin: auto;
     max-width: 70%;
     width: 100%;
     margin-bottom: 20px;
-}
-
-.password-container
-{
-    margin: auto;
-    max-width: 70%;
-    width: 100%;
 }
 
 .error-warning-container
@@ -176,24 +168,7 @@ input[type="submit" i]
     background-color: aquamarine;
     position: absolute;
     right: 100px;
-    : -100px;
+: -100px;
     min-width: 100px;
     min-height: 100px;
-}
-
-.input-container
-{
-    margin-top: 3%;
-    margin-bottom: 3%;
-}
-
-.login-footer
-{
-    margin-top: 3%;
-}
-
-.signup-container
-{
-    width: 70%;
-    margin: auto;
 }

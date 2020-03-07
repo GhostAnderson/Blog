@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script th:src="@{/js/sha1.js}"></script>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Login</title>
@@ -10,34 +11,40 @@
 </head>
 <body>
     <div class="site">
-        <div class="login-container">
-            <form th:action="@{/login}" method="post">
-            <div class="title">
-                <p style="text-align: center">登录</p>
-            </div>
-
-            <div class="avatar" style="background-image: url('css/avatar.jpg')"></div>
-
-            <div>
-            <div class="username-container">
-                <input name="username" id="username" cols="30" rows="1" class="textarea-log" placeholder="用户名">
-            </div>
-            <div class="password-container">
-                <input type="password"  name="password" id="password" cols="30" rows="1" class="textarea-log" placeholder="密码" >
-            </div>
-                <div class="error-warning-container">
-                    <div class="error-warning" id="error">
-                        用户名或密码错误
-                    </div>
+            <div class="login-container">
+                <form th:action="@{/login}" method="post"  onsubmit="f()">
+                <div class="title">
+                    <p style="text-align: center">登录</p>
                 </div>
 
-            </div>
+                <div class="avatar" style="background-image: url('css/avatar.jpg')"></div>
 
-            <div class="login-button-container">
-                <input type="submit" class="login-button" value="登录">
+                <div class="input-container">
+                <div class="username-container">
+                    <input name="username" id="username" cols="30" rows="1" class="textarea-log" placeholder="用户名">
+                </div>
+                <div class="password-container">
+                    <input type="password"  name="password" id="password" cols="30" rows="1" class="textarea-log" placeholder="密码">
+                </div>
+                    <div class="error-warning-container">
+                        <div class="error-warning" id="error">
+                            用户名或密码错误
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="login-button-container">
+                    <input type="submit" class="login-button" value="登录">
+                </div>
+
+                    <div class="login-footer">
+                        <div class="signup-container">
+                        妹有账户？<a href="/signup">立即注册！</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            </form>
-        </div>
     </div>
 
     <script th:inline="javascript">
@@ -45,6 +52,11 @@
             if (window.location.search.substr(1).indexOf("error")==-1)
             {   $("#error").hide();}
         })
+
+        function f() {
+            var s = hex_sha1($("#password").val());
+            $("#password").val(s);
+        }
     </script>
 </body>
 </html>

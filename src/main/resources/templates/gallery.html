@@ -15,8 +15,11 @@
                 <li class="navbar-element-left">
                     <a class="home-page" href="/">Laurence</a>
                 </li>
-                <li class="navbar-element-right">
+                <li class="navbar-element-right" th:if="${#strings.isEmpty(user)}">
                     <a href="/login">Log in</a>
+                </li>
+                <li class="navbar-element-right" th:unless="${#strings.isEmpty(user)}">
+                    <a href="#">Welcome,  <span th:text="${user}">Laurence</span></a>
                 </li>
                 <li class="navbar-element-right">
                     <a href="https://baike.baidu.com/item/方滨兴/9525950">About me</a>
