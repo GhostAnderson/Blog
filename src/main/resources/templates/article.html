@@ -94,7 +94,7 @@
 
     <div class="do-comments-container">
         <div class="zero-row">
-            <input type="text" id="nickname" placeholder="昵称">
+            <input type="text" id="nickname" placeholder="昵称" th:if="${#strings.isEmpty(user)}">
         </div>
         <div class="first-row">
             <div class="image-container" style="background-image: url(/img/avatar/1.jpg)">
@@ -257,6 +257,7 @@
             contentType:false,
             //取消帮我们格式化数据，是什么就是什么
             processData:false,
+            headers:headers,
             success:function (r) {
                 if(r == null)
                 {

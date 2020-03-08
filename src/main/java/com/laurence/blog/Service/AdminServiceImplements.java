@@ -8,6 +8,8 @@ import com.laurence.blog.Repository.TagRepository;
 import com.laurence.blog.Model.Article;
 import com.laurence.blog.Model.Photos;
 import com.laurence.blog.Model.Tag;
+import com.laurence.blog.Utils.CustomResponse;
+import com.laurence.blog.Utils.RandomStringUtil;
 import com.laurence.blog.Utils.timeUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
@@ -20,6 +22,9 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -89,7 +94,6 @@ public class AdminServiceImplements implements AdminService
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 	@Override
@@ -143,7 +147,34 @@ public class AdminServiceImplements implements AdminService
 			e.printStackTrace();
 			return null;
 		}
+	}
 
+	@Override
+	public CustomResponse upload(MultipartFile file)
+	{
+		try
+		{
+			String name = RandomStringUtil.getRandomString(10)+".jpg";
+			File path = new File(ResourceUtils.getURL("classpath:").getPath());
+			if(!path.exists())
+			{
+				path=new File("");
+			}
+			String uploadpath = path.getAbsolutePath()+"/static/img/upload";
+			String truePath = uploadFile(file.getBytes(),uploadpath,name);
+
+			String filePath = "/img/upload/"+name;
+
+			List<String> rtn = new ArrayList<>();
+			rtn.add(filePath);
+			return CustomResponse.createResponse("0",rtn);
+
+		} catch (IOException e)
+		{
+			log.error(e.toString());
+			e.printStackTrace();
+			return CustomResponse.createResponse("1",e.toString());
+		}
 	}
 
 

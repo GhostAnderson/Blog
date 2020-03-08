@@ -2,6 +2,8 @@ package com.laurence.blog.Controller;
 
 import com.laurence.blog.Service.AdminService;
 import com.laurence.blog.Service.IndexService;
+import com.laurence.blog.Utils.CustomResponse;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,7 @@ public class AdminController
 
 	@PostMapping("/archives/reply")
 	public String reply(@RequestParam("aid") Integer aid,
-	                    @RequestParam("nickname") String nickname,
+	                    @RequestParam(name = "nickname",required = false) String nickname,
 	                    @RequestParam("content") String content)
 	{
 		return indexService.Reply(aid,nickname,content);
@@ -53,4 +55,13 @@ public class AdminController
 	{
 		return adminService.uploadPics(aid,file);
 	}
+
+
+	@PostMapping("/admin/upload")
+	public CustomResponse uploadPics(MultipartFile file)
+	{
+		return adminService.upload(file);
+	}
+
+
 }

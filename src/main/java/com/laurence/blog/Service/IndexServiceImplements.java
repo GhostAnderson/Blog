@@ -12,6 +12,7 @@ import com.laurence.blog.Model.Comments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,15 +78,21 @@ public class IndexServiceImplements implements IndexService
 			return null;
 		else
 		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			if(principal instanceof String)
+			{
+				if(nickname.length()<=0)
+					nickname = "匿名用户";
+			}
+			else {
+				nickname = ((User)principal).getUsername();
+			}
 			Comments comments = new Comments();
 			comments.setArticle(article);
 			comments.setAuthor(nickname);
 			comments.setContent(content);
 
-			if(nickname.length() <=0)
-			{
-				nickname = "匿名用户";
-			}
+
 			String avatar = Integer.toBinaryString(nickname.charAt(0));
 			int a =Integer.parseInt(avatar,2);
 

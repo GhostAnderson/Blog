@@ -48,6 +48,7 @@ public class IndexController
 		for (int i = 0;i<articles.size();i++)
 		{
 			String temp = articles.get(i).getContent();
+			temp = temp.replaceAll("<img src.*?>","");
 			articles.get(i).setContent(temp.substring(0,temp.length()>150?150:temp.length()));
 		}
 		if(articles.size() == 0)
@@ -63,7 +64,6 @@ public class IndexController
 	}
 
 	@GetMapping("/mindfuck")
-
 	public String MindFuck(Model model,@RequestParam(value = "page",required = false)Integer page)
 	{
 		if (page == null)

@@ -1,11 +1,10 @@
 package com.laurence.blog.Model;
 
 import lombok.Data;
+import org.springframework.data.util.Lazy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -19,6 +18,6 @@ public class Role
 	String roleName;
 	String Description;
 
-	@ManyToMany(mappedBy = "roleList")
+	@ManyToMany(mappedBy = "roleList",fetch = FetchType.LAZY)
 	List<User> userList;
 }
