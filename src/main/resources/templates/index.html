@@ -7,6 +7,14 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script th:src="@{js/three.min.js}"></script>
+    <script th:src="@{js/CopyShader.js}"></script>
+    <script th:src="@{js/EffectComposer.js}"></script>
+    <script th:src="@{js/FilmPass.js}"></script>
+    <script th:src="@{js/FilmShader.js}"></script>
+    <script th:src="@{js/ShaderPass.js}"></script>
+    <script th:src="@{js/RenderPass.js}"></script>
 
     <script th:src="@{/js/main.js}"></script>
 </head>
@@ -40,8 +48,7 @@
         </ul>
     </div>
 
-
-    <div class="video-container">
+    <div id="container" style="width: 100vw;height: 100vh;">
         <div class="title-container">
             <p class="main-title">
                 人间动物园
@@ -123,35 +130,36 @@
 
 </div>
 
+<script src="js/index.js"></script>
     <script>
         function scroll() {
         var top = $(".end-of-video").offset().top;
         var scrollTop = $(window).scrollTop();
         if(scrollTop<top){
             $('.nav-container').css("background",'transparent');
-            var minus = top-scrollTop;
-            var divide = minus/top;
-            if(divide<0.16)
-            {
-                $(".main-title").css('display','none');
-                $(".subtitle")  .css('display','none');
-
-            }
-            else
-            {
-                $(".main-title").css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2*(1-divide)+')');
-                $(".subtitle")  .css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2.45*(1-divide)+')');
-
-                $(".main-title").css('display','block');
-                $(".subtitle")  .css('display','block');
-
-                $(".main-title").css('filter','blur('+10*(1-divide)+'px)');
-                $(".subtitle")  .css('filter','blur('+10*(1-divide)+'px)');
-
-            }
-
-
-            $(".subtitle").css('margin-top',40*divide);
+            // var minus = top-scrollTop;
+            // var divide = minus/top;
+            // if(divide<0.16)
+            // {
+            //     $(".main-title").css('display','none');
+            //     $(".subtitle")  .css('display','none');
+            //
+            // }
+            // else
+            // {
+            //     $(".main-title").css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2*(1-divide)+')');
+            //     $(".subtitle")  .css('transform','matrix('+divide+','+'0,'+'0,'+divide+','+'0,'+top/2.45*(1-divide)+')');
+            //
+            //     $(".main-title").css('display','block');
+            //     $(".subtitle")  .css('display','block');
+            //
+            //     $(".main-title").css('filter','blur('+10*(1-divide)+'px)');
+            //     $(".subtitle")  .css('filter','blur('+10*(1-divide)+'px)');
+            //
+            // }
+            //
+            //
+            // $(".subtitle").css('margin-top',40*divide);
         }
         else
         {

@@ -3,11 +3,9 @@ package com.laurence.blog.Controller;
 import com.laurence.blog.Model.Article;
 import com.laurence.blog.Model.User;
 import com.laurence.blog.Service.IndexService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -76,6 +73,7 @@ public class IndexController
 		for (int i = 0;i<articles.size();i++)
 		{
 			String temp = articles.get(i).getContent();
+			temp = temp.replaceAll("<img src.*?>","");
 			articles.get(i).setContent(temp.substring(0,temp.length()>150?150:temp.length()));
 		}
 		model.addAttribute("articles",articles);
@@ -125,8 +123,14 @@ public class IndexController
 		return "redirect:/";
 	}
 
+	@GetMapping("/admin/newarticle")
+	public String newArticle()
+	{
+		return "upload";
+	}
+
 	@GetMapping("/admin")
-	public String Admin(HttpServletRequest request)
+	public String admin()
 	{
 		return "admin";
 	}
@@ -152,5 +156,11 @@ public class IndexController
 		else
 			model.addAttribute("user",((User)principle).getUsername());
 		return "gallery";
+	}
+
+	@GetMapping("/admin/articlemanage")
+	public String articleManage(Model model)
+	{
+		return "articlemanage";
 	}
 }

@@ -1,5 +1,8 @@
 package com.laurence.blog.Configure;
 
+import com.laurence.blog.Service.MyUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import sun.security.util.Password;
 
 
@@ -16,6 +21,12 @@ import sun.security.util.Password;
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+	@Value("${rememberme.key}") private String remembermeKey;
+	@Autowired
+	MyUserDetailService myUserDetailService;
+
+	@Autowired
+	RememberMeServices rememberMeServices;
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception
@@ -35,6 +46,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 				.formLogin()
 				.loginPage("/login")
 				.and()
+				.rememberMe().key(remembermeKey).rememberMeServices(rememberMeServices())
+				.and()
 				.logout()
 				.logoutUrl("/logout")
 				.deleteCookies("JSESSION")
@@ -47,5 +60,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 		return new BCryptPasswordEncoder();
 	}
 
-
+	@Bean
+	public RememberMeServices rememberMeServices()
+	{
+		TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices(remembermeKey,
+				myUserDetailService);
+		return tokenBasedRememberMeServices;
+	}
 }

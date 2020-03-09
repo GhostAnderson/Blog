@@ -25,24 +25,6 @@ public class MyUserDetailService implements UserDetailsService
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-//	@PostConstruct
-//	public void dataInit()
-//	{
-//		Role adminRole = new Role();
-//		adminRole.setRoleName("admin");
-//		adminRole.setDescription("管理员");
-//		roleRepository.save(adminRole);
-//
-//		List<Role> roles = new ArrayList<>();
-//		roles.add(adminRole);
-//
-//		User admin = new User();
-//		admin.setUsername("Laurence");
-//		admin.setPassword(passwordEncoder.encode("Ghost12345"));
-//		admin.setRoleList(roles);
-//		userRepository.save(admin);
-//
-//	}
 
 	@Override
 	public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException

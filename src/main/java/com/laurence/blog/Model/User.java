@@ -1,6 +1,8 @@
 package com.laurence.blog.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Proxy(lazy = false)
 public class User implements UserDetails
 {
 	@Id
@@ -22,7 +25,7 @@ public class User implements UserDetails
 
 	private String password;
 
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Article> articleList;
 

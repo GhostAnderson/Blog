@@ -33,3 +33,6 @@ server:
   port: 80
   tomcat:
     max-http-post-size: -1
+
+rememberme:
+  key: ruaruarua

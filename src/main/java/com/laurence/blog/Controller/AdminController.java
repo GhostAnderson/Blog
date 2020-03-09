@@ -62,6 +62,4 @@ public class AdminController
 	{
 		return adminService.upload(file);
 	}
-
-
 }
