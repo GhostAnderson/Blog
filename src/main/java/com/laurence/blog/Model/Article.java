@@ -1,5 +1,8 @@
 package com.laurence.blog.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -39,10 +42,10 @@ public class Article
 
 	private Integer likes;
 
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "article",orphanRemoval = true,cascade = CascadeType.REMOVE)
 	private List<Comments>commentsList;
 
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "article",orphanRemoval = true,cascade = CascadeType.REMOVE)
 	private List<Photos> photosList;
 
 	public Article()

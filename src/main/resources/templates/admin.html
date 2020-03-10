@@ -24,7 +24,7 @@
                     <li class="clickable" hash="#newarticle">
                         新建文章
                     </li>
-                    <li class="clickable" hash="#">
+                    <li class="clickable" hash="#usermanage">
                         用户管理
                     </li>
                 </ul>
@@ -75,6 +75,10 @@
                 break;
             case '#articlemanage':
                 path = '/admin/articlemanage';
+                $(".right-container").load(path);
+                break;
+            case '#usermanage':
+                path = '/admin/usermanage';
                 $(".right-container").load(path);
                 break;
 

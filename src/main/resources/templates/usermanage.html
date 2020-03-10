@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/am.css}">
+    <link rel="stylesheet" th:href="@{/css/label.css}">
+
+    <link rel="stylesheet" th:href="@{/css/button.css}">
+</head>
+<body>
+    <div class="am-site">
+        <div class="title-container">
+            用户管理
+        </div>
+
+        <div class="table-container">
+            <div class="table-header-container">
+                <div class="table-header" style="width: 33%">
+                    用户名
+                </div>
+                <div class="table-header" style="width: 33%">
+                    权限
+                </div>
+                <div class="table-header" style="width: 33%">
+                    操作
+                </div>
+            </div>
+            <div class="table">
+                <div class="tr" th:each="user:${users}" th:id="${user.getUsername()}">
+                    <div class="td" style="width: 33%" th:text="${user.getUsername()}">Laurence</div>
+                    <div class="td auth-container" style="width: 33%">
+                        <span class="label label-default dis" th:each="role:${user.getAuthorities()}" th:text="${role.getAuthority()}" th:name="${user.getUsername()}" style="margin: 0 3px" onclick="j(this)">Admin</span>
+                        <span class="label label-primary dis"> + </span>
+                    </div>
+                    <div class="td" style="width: 33%">
+                        <div class="operation-container">
+                            <div class="operation">
+                                <button class="btn btn-warning" onclick="d(this)">删除用户</button>
+                                <button class="btn btn-primary" onclick="k(this)" th:name="${user.getUsername()}">编辑权限</button>
+                                <button class="btn btn-primary disabled" onclick="s(this)">保存</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="page-container">
+            <div class="btn lac btn-default " style="width: 40px;font-weight: bolder;font-size: x-large;margin: auto;" onclick="prevPage()">
+                <
+            </div>
+            <div class="current-page-container">
+                <p class="current-page" th:text="${page}"> 1 </p>
+            </div>
+            <div class="btn rac btn-default" style="width: 40px;font-weight: bolder;font-size: x-large;margin: auto;" onclick="nextPage()">
+                >
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+
+        headers = {};
+        headers['X-CSRF-TOKEN'] = [[${_csrf.token}]];
+        (function () {
+            var currentPage = [[${page}]];
+            console.log(currentPage);
+            var totalPage = [[${totalpages}]];
+            console.log(totalPage);
+
+            if(currentPage == 1)
+            {
+                $('.lac').addClass("disabled");
+            }
+            if(currentPage == totalPage)
+            {
+                $('.rac').addClass("disabled");
+            }
+        })();
+
+        function d(t) {
+            t = $(t);
+            if (t.text() == "删除用户") {
+                t.removeClass('btn-warning');
+                t.addClass('btn-danger');
+                t.text("确认删除");
+            } else if (t.text() == "确认删除")
+            {
+                //真实删除代码
+                $('#'+t.next().attr('name')).remove();
+            }
+        }
+
+        function k(i) {
+            if($(i).hasClass('disabled'))
+                return;
+            if (i.textContent == "编辑权限") {
+                $(i).prev().addClass('disabled');
+                $(i).next().removeClass('disabled');
+                console.log(i);
+                var username = i.name;
+                console.log(username);
+                i.textContent = "取消编辑";
+                    $('#' + username + ' div span').removeClass('dis');
+                var _1 = $('#' + username + ' div span').filter('.label-default');
+                _1.addClass('label-danger');
+                _1.addClass('pointer-cursor');
+                _1.removeClass('label-default');
+            }
+            else if(i.textContent == "取消编辑"){
+                $(i).next().addClass('disabled');
+                $(i).prev().removeClass('disabled');
+
+                var username = i.name;
+                i.textContent = "编辑权限";
+                $('.selected-delete').show();
+                $('.selected-delete').removeClass('selected-delete');
+
+                var _1 = $('#' + username + ' div span').filter('.label-danger');
+                _1.addClass('label-default');
+                _1.removeClass('pointer-cursor');
+                _1.removeClass('label-danger');
+            }
+        }
+
+        function s(i) {
+            i = $(i);
+            if(i.hasClass('disabled'))
+                return;
+            else
+            {
+                console.log($('.selected-delete'));
+                $('.selected-delete').remove();
+                //添加真实删除代码和真实添加权限代码
+
+                var username = i.prev().attr('name');
+                var _1 = $('#' + username + ' div span').filter('.label-danger');
+                _1.addClass('label-default');
+                _1.removeClass('pointer-cursor');
+                _1.removeClass('label-danger');
+                i.addClass('disabled');
+                i.prev().text('编辑权限');
+                i.prev().prev().removeClass('disabled');
+            }
+        }
+
+        function j(i) {
+            if (i.getAttribute('class').indexOf('dis')!=-1)
+            {
+                console.log(i);
+                return;
+            }
+            else
+            {
+                if(!$(i).hasClass('label-primary')) {
+                    $(i).addClass("selected-delete");
+                    $(i).hide();
+                }
+                else
+                    alert("新增权限");
+                console.log(i.getAttribute('name')+' remove '+i.textContent);
+            }
+        }
+
+        function nextPage() {
+            var currentpage = [[${page}]];
+            if($('.rac').hasClass("disabled"))
+                return;
+            $(".right-container").load('/admin/usermanage?page='+(currentpage+1))
+        }
+        function prevPage() {
+            var currentpage = [[${page}]];
+            if($('.lac').hasClass("disabled"))
+                return;
+            $(".right-container").load('/admin/usermanage?page='+(currentpage-1))
+        }
+    </script>
+
+</body>
+</html>

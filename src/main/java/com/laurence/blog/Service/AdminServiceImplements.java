@@ -177,6 +177,32 @@ public class AdminServiceImplements implements AdminService
 		}
 	}
 
+	@Override
+	public CustomResponse delete(Integer aid)
+	{
+		try
+		{
+			articleRepository.deleteByAid(aid);
+			return CustomResponse.createResponse("200",null);
+		}
+		catch (Exception e)
+		{
+			return CustomResponse.createResponse("500",null);
+		}
+	}
+
+	@Override
+	public List<User> findUserByPage(Integer start, Integer numperpage)
+	{
+		return userRepository.findByPage(start,numperpage);
+	}
+
+	@Override
+	public Long userCount()
+	{
+		return userRepository.count();
+	}
+
 
 	private static String uploadFile(byte[] file,String filePath,String fileName) throws IOException
 	{

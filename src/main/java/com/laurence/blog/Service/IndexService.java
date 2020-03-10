@@ -18,5 +18,7 @@ public interface IndexService
 
 	List<Article> getMindFuck(Integer page,Integer numperpage);
 
+	Long count();
+
 	boolean Signup(String username, String password);
 }

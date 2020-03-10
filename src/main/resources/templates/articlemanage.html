@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>文章管理</title>
     <link rel="stylesheet" th:href="@{/css/am.css}">
+    <link rel="stylesheet" th:href="@{/css/button.css}">
 </head>
 <body>
     <div class="am-site">
@@ -12,15 +13,131 @@
         </div>
 
         <div class="table-container">
-            <div class="table-header">
-
+            <div class="table-header-container">
+                <div class="table-header">
+                    标题
+                </div>
+                <div class="table-header">
+                    作者
+                </div>
+                <div class="table-header">
+                    内容
+                </div>
+                <div class="table-header">
+                    操作
+                </div>
             </div>
             <div class="table">
-                <div class="tr">
+                <div class="tr" th:each="article:${articles}">
+                    <div class="td"><a th:href="'/archives/'+${article.getAid()}" th:utext="${article.getTitle()}" target="_blank"></a></div>
+                    <div class="td" th:utext="${article.getUser().getUsername()}">Laurence</div>
+                    <div class="td" th:text="${article.getContent()}">
+                        宇宙是一个假象，是不是。<br>
+
+                        我不相信当代科学。<br>
+
+                        除非有一个人骑马一直朝前走，<br>
+
+                        路过所有的草原，海，山，爱情，相遇，别离，城市和岁月，<br>
+
+                        最终回到你身边，<br>
+
+                        这样我才同意你球可能是圆的，对不对。 </div>
+                    <div class="td">
+                        <div class="operation-container">
+                            <div class="operation">
+                                <button class="btn btn-warning" onclick="c(this);" th:name="${article.getAid()}">删除文章</button>
+                                <button class="btn btn-primary" th:name="${article.getAid()}">编辑</button>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
+
+
+        <div class="page-container">
+            <div class="btn lac btn-default " style="width: 40px;font-weight: bolder;font-size: x-large;margin: auto;" onclick="prevPage()">
+                <
+            </div>
+            <div class="current-page-container">
+                <p class="current-page" th:text="${page}"> 1 </p>
+            </div>
+            <div class="btn rac btn-default" style="width: 40px;font-weight: bolder;font-size: x-large;margin: auto;" onclick="nextPage()">
+                >
+            </div>
+        </div>
     </div>
+    <script th:inline="javascript">
+        headers = {};
+        headers['X-CSRF-TOKEN'] = [[${_csrf.token}]];
+        (function () {
+            var currentPage = [[${page}]];
+            console.log(currentPage);
+            var totalPage = [[${totalpages}]];
+            console.log(totalPage);
+
+            if(currentPage == 1)
+            {
+                $('.lac').addClass("disabled");
+            }
+            if(currentPage == totalPage)
+            {
+                $('.rac').addClass("disabled");
+            }
+        })();
+        function c(i) {
+            i = $(i);
+            if(i.text() == '删除文章')
+            {
+                i.removeClass('btn-warning');
+                i.addClass('btn-danger');
+                i.text("确认删除");
+            }
+            else if(i.text() == '确认删除'){
+                form = new FormData();
+                form.append("aid", i.attr('name'));
+                $.ajax(
+                    {
+                        type: "post",
+                        url: "/admin/delete",
+                        data: form,
+                        headers: headers,
+                        contentType: false,
+                        processData: false,
+                        success: function (r) {
+                            var rtn = eval(r);
+                            if (rtn['errno'] == 500) {
+                                i.removeClass('btn-danger');
+                                i.addClass('btn-warning');
+                                alert("删除失败");
+                            } else if (rtn['errno'] == 200) {
+                                alert("删除成功");
+                                $('#' + i.attr('name')).remove();
+                            } else {
+                                i.removeClass('btn-danger');
+                                i.addClass('btn-warning');
+                                alert(rtn);
+                            }
+                        }
+                    }
+                )
+            }
+        }
+        function nextPage() {
+            var currentpage = [[${page}]];
+            if($('.rac').hasClass("disabled"))
+                return;
+            $(".right-container").load('/admin/articlemanage?page='+(currentpage+1))
+        }
+        function prevPage() {
+            var currentpage = [[${page}]];
+            if($('.lac').hasClass("disabled"))
+                return;
+            $(".right-container").load('/admin/articlemanage?page='+(currentpage-1))
+        }
+
+    </script>
 </body>
 </html>

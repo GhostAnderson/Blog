@@ -55,6 +55,11 @@ public class IndexServiceImplements implements IndexService
 	}
 
 
+	@Override
+	public Long count()
+	{
+		return articleRepository.count();
+	}
 
 	@Override
 	public String Like(Integer aid)

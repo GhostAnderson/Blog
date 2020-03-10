@@ -2,6 +2,7 @@ package com.laurence.blog.Controller;
 
 import com.laurence.blog.Model.Article;
 import com.laurence.blog.Model.User;
+import com.laurence.blog.Service.AdminService;
 import com.laurence.blog.Service.IndexService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class IndexController
 {
 	@Autowired
 	IndexService indexService;
+
+	@Autowired
+	AdminService adminService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
@@ -159,8 +163,37 @@ public class IndexController
 	}
 
 	@GetMapping("/admin/articlemanage")
-	public String articleManage(Model model)
+	public String articleManage(Model model,@RequestParam(value = "page",required = false)Integer page)
 	{
+		if (page == null)
+			page = 0;
+		else
+			page -=1;
+		List<Article> articles = indexService.getPage(page*5,5);
+		for (int i = 0;i<articles.size();i++)
+		{
+			String temp = articles.get(i).getContent();
+			temp = temp.replaceAll("<img src.*?>","");
+			articles.get(i).setContent(temp.substring(0,temp.length()>150?150:temp.length()));
+		}
+
+		model.addAttribute("articles",articles);
+		model.addAttribute("page",page+1);
+		model.addAttribute("totalpages",indexService.count()/5+1);
 		return "articlemanage";
 	}
+
+	@GetMapping("/admin/usermanage")
+	public String userManage(Model model,@RequestParam(value = "page",required = false)Integer page)
+	{
+		if (page == null)
+			page = 0;
+		else
+			page -=1;
+		model.addAttribute("users",adminService.findUserByPage(page*7,7));
+		model.addAttribute("page",page+1);
+		model.addAttribute("totalpages",adminService.userCount()/7+1);
+		return "usermanage";
+	}
+
 }

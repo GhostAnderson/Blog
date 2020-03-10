@@ -20,3 +20,51 @@ body
     font-size: 2em;
     padding-bottom: 5px;
 }
+
+.page-container
+{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    margin: 10px auto;
+}
+
+.arrow-container
+{
+    width: 40px;
+    font-weight: bolder;
+    font-size: x-large;
+    margin: auto;
+}
+
+
+.left-arrow{
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-top: 4px solid rgb(241,241,241);
+    border-right: 4px solid rgb(201,201,201);
+    transform: rotate(-135deg);
+
+}
+.right-arrow{
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-top: 4px solid rgb(201,201,201);
+    border-right: 4px solid rgb(241,241,241);
+    transform: rotate(45deg);
+}
+.current-page-container
+{
+    margin: auto;
+}
+
+.pointer-cursor
+{
+    cursor: pointer;
+}
+
+.auth-container
+{
+}
