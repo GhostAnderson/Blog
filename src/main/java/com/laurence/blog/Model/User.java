@@ -25,6 +25,8 @@ public class User implements UserDetails
 
 	private String password;
 
+	private Boolean isEnable = true;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Article> articleList;
@@ -79,6 +81,6 @@ public class User implements UserDetails
 	@Override
 	public boolean isEnabled()
 	{
-		return true;
+		return isEnable;
 	}
 }

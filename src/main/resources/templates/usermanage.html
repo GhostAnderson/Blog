@@ -9,7 +9,13 @@
     <link rel="stylesheet" th:href="@{/css/button.css}">
 </head>
 <body>
+
     <div class="am-site">
+        <div class="modal-container">
+            <div class="modal">
+
+            </div>
+        </div>
         <div class="title-container">
             用户管理
         </div>
@@ -31,7 +37,7 @@
                     <div class="td" style="width: 33%" th:text="${user.getUsername()}">Laurence</div>
                     <div class="td auth-container" style="width: 33%">
                         <span class="label label-default dis" th:each="role:${user.getAuthorities()}" th:text="${role.getAuthority()}" th:name="${user.getUsername()}" style="margin: 0 3px" onclick="j(this)">Admin</span>
-                        <span class="label label-primary dis"> + </span>
+                        <span class="label label-primary dis" onclick="a(this)" style="cursor: pointer;"> + </span>
                     </div>
                     <div class="td" style="width: 33%">
                         <div class="operation-container">
@@ -39,7 +45,8 @@
                                 <button class="btn btn-warning" onclick="d(this)">删除用户</button>
                                 <button class="btn btn-primary" onclick="k(this)" th:name="${user.getUsername()}">编辑权限</button>
                                 <button class="btn btn-primary disabled" onclick="s(this)">保存</button>
-                                <button class="btn btn-warning">封禁！</button>
+                                <button class="btn btn-warning" onclick="b(this)" th:if="${user.isEnabled()}">封禁！</button>
+                                <button class="btn btn-warning" onclick="b(this)" th:unless="${user.isEnabled()}">解封！</button>
                             </div>
                         </div>
                     </div>
@@ -82,6 +89,16 @@
             }
         })();
 
+        $('.modal-container').click(function (e) {
+            if(e.target.getAttribute('class') != 'modal')
+                $('.modal-container').fadeOut("fast");
+        });
+        function a(e) {
+            e = $(e);
+            $('.modal-container').fadeIn("fast");
+
+        }
+
         function d(t) {
             t = $(t);
             if (t.text() == "删除用户") {
@@ -92,6 +109,26 @@
             {
                 //真实删除代码
                 $('#'+t.next().attr('name')).remove();
+            }
+        }
+
+        function b(i) {
+            i=$(i);
+            if(i.text() == "封禁！")
+            {
+
+            }
+            else if(i.text() == "确定解封")
+            {
+
+            }
+            else if(i.text() == "解封！")
+            {
+
+            }
+            else if(i.text() == "确定解封")
+            {
+
             }
         }
 
