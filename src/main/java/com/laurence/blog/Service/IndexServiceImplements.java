@@ -45,6 +45,8 @@ public class IndexServiceImplements implements IndexService
 	public Article articles(Integer id)
 	{
 		Article article = articleRepository.findArticleByAid(id);
+		article.setViewTime(article.getViewTime()+1);
+		articleRepository.save(article);
 		return article;
 	}
 
@@ -79,6 +81,8 @@ public class IndexServiceImplements implements IndexService
 	public String Reply(Integer aid, String nickname, String content)
 	{
 		Article article = articleRepository.findArticleByAid(aid);
+		if (content.length() >140)
+			return null;
 		if(article == null)
 			return null;
 		else

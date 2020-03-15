@@ -32,6 +32,7 @@ public class User implements UserDetails
 	private List<Article> articleList;
 
 	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="user_role",joinColumns = @JoinColumn(name="pid"),inverseJoinColumns = @JoinColumn(name="rid"))
 	private List<Role> roleList;
 
 	public User()

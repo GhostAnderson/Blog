@@ -1,13 +1,7 @@
 package com.laurence.blog.Service;
 
-import com.laurence.blog.Model.User;
-import com.laurence.blog.Repository.ArticleRepository;
-import com.laurence.blog.Repository.UserRepository;
-import com.laurence.blog.Repository.PhotoRepository;
-import com.laurence.blog.Repository.TagRepository;
-import com.laurence.blog.Model.Article;
-import com.laurence.blog.Model.Photos;
-import com.laurence.blog.Model.Tag;
+import com.laurence.blog.Model.*;
+import com.laurence.blog.Repository.*;
 import com.laurence.blog.Utils.CustomResponse;
 import com.laurence.blog.Utils.RandomStringUtil;
 import com.laurence.blog.Utils.timeUtil;
@@ -43,6 +37,11 @@ public class AdminServiceImplements implements AdminService
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	RoleRepository roleRepository;
+
+	@Autowired
+	CommentsRepository commentsRepository;
 
 	@Override
 	public String SubmitArticle(String title, MultipartFile cover, Integer tid, String content)
@@ -203,8 +202,96 @@ public class AdminServiceImplements implements AdminService
 		return userRepository.count();
 	}
 
+	@Override
+	public CustomResponse deleteUser(String username)
+	{
+		try
+		{
+			userRepository.deleteByUsername(username);
+			return CustomResponse.createResponse("200", "success");
+		} catch (Exception e)
+		{
+			log.error(e.toString());
+			e.printStackTrace();
+			return CustomResponse.createResponse("500",e.toString());
+		}
+	}
 
-	private static String uploadFile(byte[] file,String filePath,String fileName) throws IOException
+	@Override
+	public CustomResponse privmanage(String username, List<String> rolelist)
+	{
+		try
+		{
+			User user = userRepository.findByUsername(username);
+			List<Role> roles = new ArrayList<>();
+
+			for (String role : rolelist)
+			{
+				role = role.substring(5);
+				Role r = roleRepository.findByRoleName(role);
+				roles.add(r);
+			}
+			user.setRoleList(roles);
+			userRepository.save(user);
+			return CustomResponse.createResponse("200","success");
+		}
+		catch (Exception e)
+		{
+			log.error(e.toString());
+			e.printStackTrace();
+			return CustomResponse.createResponse("500","error");
+		}
+	}
+
+	@Override
+	public CustomResponse banuser(String username)
+	{
+		try
+		{
+			User user = userRepository.findByUsername(username);
+			user.setIsEnable(false);
+			userRepository.save(user);
+			return CustomResponse.createResponse("200","success");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			log.error(e.toString());
+			return CustomResponse.createResponse("500",e.toString());
+		}
+	}
+
+	@Override
+	public CustomResponse unbanuser(String username)
+	{
+		try
+		{
+			User user = userRepository.findByUsername(username);
+			user.setIsEnable(true);
+			userRepository.save(user);
+			return CustomResponse.createResponse("200","success");
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			log.error(e.toString());
+			return CustomResponse.createResponse("500",e.toString());
+		}
+	}
+
+	@Override
+	public List<Comments> getComments(Integer page, Integer numperpage)
+	{
+		return commentsRepository.findByPage(page,numperpage);
+	}
+
+	@Override
+	public Long commentCount()
+	{
+		return commentsRepository.count();
+	}
+
+	private static String uploadFile(byte[] file, String filePath, String fileName) throws IOException
 	{
 		File targetPath = new File(filePath);
 		filePath = targetPath.getAbsolutePath();
@@ -219,4 +306,19 @@ public class AdminServiceImplements implements AdminService
 		return filePath+"/"+fileName;
 	}
 
+	@Override
+	public CustomResponse deleteComment(Integer cid)
+	{
+		try
+		{
+			commentsRepository.deleteById(cid);
+			return CustomResponse.createResponse("200","success");
+		}
+		catch (Exception e)
+		{
+			log.error(e.toString());
+			e.printStackTrace();
+			return CustomResponse.createResponse("500",e.toString());
+		}
+	}
 }

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>文章管理</title>
     <link rel="stylesheet" th:href="@{/css/am.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
     <link rel="stylesheet" th:href="@{/css/button.css}">
 </head>
 <body>
@@ -14,24 +16,30 @@
 
         <div class="table-container">
             <div class="table-header-container">
-                <div class="table-header">
+                <div class="table-header" style="width: 20%">
                     标题
                 </div>
-                <div class="table-header">
+                <div class="table-header" style="width: 20%">
                     作者
                 </div>
-                <div class="table-header">
+                <div class="table-header" style="width: 20%">
                     内容
                 </div>
-                <div class="table-header">
+                <div class="table-header" style="width: 10%">
+                    赞数
+                </div>
+                <div class="table-header" style="width: 10%">
+                    浏览次数
+                </div>
+                <div class="table-header" style="width: 20%">
                     操作
                 </div>
             </div>
-            <div class="table">
+            <div class="table-tr">
                 <div class="tr" th:each="article:${articles}">
-                    <div class="td"><a th:href="'/archives/'+${article.getAid()}" th:utext="${article.getTitle()}" target="_blank"></a></div>
-                    <div class="td" th:utext="${article.getUser().getUsername()}">Laurence</div>
-                    <div class="td" th:text="${article.getContent()}">
+                    <div class="td" style="width: 20%"><a th:href="'/archives/'+${article.getAid()}" th:utext="${article.getTitle()}" target="_blank"></a></div>
+                    <div class="td" th:utext="${article.getUser().getUsername()}" style="width: 20%">Laurence</div>
+                    <div class="td" th:text="${article.getContent()}" style="width: 20%">
                         宇宙是一个假象，是不是。<br>
 
                         我不相信当代科学。<br>
@@ -43,7 +51,9 @@
                         最终回到你身边，<br>
 
                         这样我才同意你球可能是圆的，对不对。 </div>
-                    <div class="td">
+                    <div class="td" th:utext="${article.getLikes()}" style="width: 10%">Laurence</div>
+                    <div class="td" th:utext="${article.getViewTime()}" style="width: 10%">Laurence</div>
+                    <div class="td" style="width: 20%;">
                         <div class="operation-container">
                             <div class="operation">
                                 <button class="btn btn-warning" onclick="c(this);" th:name="${article.getAid()}">删除文章</button>

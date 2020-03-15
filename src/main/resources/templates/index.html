@@ -176,6 +176,10 @@
             animate: true,
             maxPage:2,
             scrollThreshold:90
+        });
+        $(window).resize(function () {
+            $('canvas').remove();
+            init();
         })
 
     </script>

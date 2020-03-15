@@ -12,16 +12,19 @@ body{
     -moz-font-feature-settings: "liga" on;
     background-color: #fff;
 }
-
+html
+{
+    overflow: auto;
+}
 p{
-    margin: 0;
+    margin: 20px 0;
 }
 
 div.nav-container{
     padding-top: 5px;
     width: 100%;
     height: 50px;
-    position: relative;
+    position: fixed;
     background: transparent;
     z-index: 99;
 }
@@ -32,6 +35,11 @@ li a{
     margin-right: 2px;
     margin-bottom: 2px;
     vertical-align: bottom;
+}
+
+.navbar
+{
+    max-width: 60%;
 }
 
 .navbar-element-right{
@@ -54,10 +62,6 @@ a{
 }
 
 
-div.outer
-{
-    margin: 0 4vw 4vh;
-}
 
 div.article-title
 {
@@ -100,6 +104,11 @@ div.time-tag
 {
     margin: 0;
     font-size: 50px;
+}
+
+.outer
+{
+    padding-top: 50px;
 }
 
 .article-background
@@ -504,5 +513,37 @@ td:hover
 
 .article-main-container p
 {
-    margin: 10px 0;
+    margin: 20px 0;
+}
+
+@media screen and (max-width: 1000px) {
+    .article-container {
+        max-width: 100%;
+    }
+
+    .navbar
+    {
+        max-width: 100%;
+    }
+
+    .do-comments-container
+    {
+        max-width: 90%;
+    }
+
+    .comment-submit-button
+    {
+        width: 10vh;
+        height: 10vh;
+    }
+    .comment-textarea
+    {
+        width: 60vw;
+        font-size:2em;
+    }
+    .article-main-container
+    {
+        margin: -170px auto;
+        width: 70vw;
+    }
 }

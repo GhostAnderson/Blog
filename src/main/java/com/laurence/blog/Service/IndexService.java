@@ -1,7 +1,9 @@
 package com.laurence.blog.Service;
 
 import com.laurence.blog.Model.Article;
+import com.laurence.blog.Model.Comments;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 public interface IndexService
@@ -21,4 +23,5 @@ public interface IndexService
 	Long count();
 
 	boolean Signup(String username, String password);
+
 }

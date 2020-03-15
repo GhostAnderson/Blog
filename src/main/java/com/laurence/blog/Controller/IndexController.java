@@ -196,4 +196,16 @@ public class IndexController
 		return "usermanage";
 	}
 
+	@GetMapping("/admin/commentmanage")
+	public String commentManage(Model model,@RequestParam(value = "page",required = false)Integer page)
+	{
+		if(page == null)
+			page = 0;
+		else
+			page-=1;
+		model.addAttribute("comments",adminService.getComments(page*10,10));
+		model.addAttribute("page",page+1);
+		model.addAttribute("totalpages",adminService.commentCount()/10+1);
+		return "commentmanage";
+	}
 }

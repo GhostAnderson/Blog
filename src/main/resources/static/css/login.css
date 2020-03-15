@@ -47,9 +47,7 @@ input[type="submit" i]
 {
     padding-top: 50px;
     padding-bottom: 50px;
-    max-width: 26%;
-    max-height: 50%;
-    width: 100%;
+    width: 26%;
     height: 60vh;
     margin: auto;
     border-radius: 5px;
@@ -196,4 +194,14 @@ input[type="submit" i]
 {
     width: 70%;
     margin: auto;
+}
+
+@media screen and (max-width: 1000px)
+{
+    .login-container
+    {
+        margin: 0%;
+        width: 100%;
+        height: 100%;
+    }
 }

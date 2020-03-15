@@ -5,7 +5,8 @@
     <title>后台管理</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+<!--    <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>-->
+    <script th:src="@{/js/wangEditor.min.js}"></script>
 </head>
 <body>
     <div class="site">
@@ -26,6 +27,9 @@
                     </li>
                     <li class="clickable" hash="#usermanage">
                         用户管理
+                    </li>
+                    <li class="clickable" hash="#commentmanage">
+                        评论管理
                     </li>
                 </ul>
             </div>
@@ -81,7 +85,10 @@
                 path = '/admin/usermanage';
                 $(".right-container").load(path);
                 break;
-
+            case '#commentmanage':
+                path = '/admin/commentmanage';
+                $(".right-container").load(path);
+                break;
         }
     }
 
